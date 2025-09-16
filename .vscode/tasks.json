@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run pytest",
+            "type": "shell",
+            "command": "cls; pytest -v -s",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "run udp server",
+            "type": "shell",
+            "command": "cls; python src/udp/Udp_Server.py",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "run udp client",
+            "type": "shell",
+            "command": "cls; python src/udp/Udp_Client.py",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
