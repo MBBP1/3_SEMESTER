@@ -34,7 +34,7 @@
         {
             "label": "run tcp server",
             "type": "shell",
-            "command": "cls; python src/tcp/Tcp_Server.py",
+            "command": "cls; python -m  src.tcp.Tcp_Server",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -44,7 +44,27 @@
         {
             "label": "run tcp client",
             "type": "shell",
-            "command": "cls; python src/tcp/Tcp_Client.py",
+            "command": "cls; python -m src.tcp.Tcp_Client",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "run mqtt broker",
+            "type": "shell",
+            "command": "cls; python -m src.mqtt.Mqtt_Broker",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "run mqtt client",
+            "type": "shell",
+            "command": "cls; python -m src.mqtt.Mqtt_Client",
             "problemMatcher": [],
             "group": {
                 "kind": "build",

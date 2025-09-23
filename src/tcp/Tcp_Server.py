@@ -54,11 +54,11 @@ class TCPServer:
                     buffer += data
                     while "\n" in buffer:
                         msg, buffer = buffer.split("\n", 1)
-                        print(f"{Colors.greenColor}Received: {msg}{Colors.resetColor}")
+                        print(f"{Colors.green}Received: {msg}{Colors.reset}")
                         self.receivedMessages.append(msg)
                 except socket.timeout:
                     warningMsg = "Socket timeout: No message received" 
-                    print(f"{Colors.orangeColor}Warning, {warningMsg}{Colors.resetColor}")
+                    print(f"{Colors.orange}Warning, {warningMsg}{Colors.reset}")
                     self.warnings.append(warningMsg)
 
         except KeyboardInterrupt:

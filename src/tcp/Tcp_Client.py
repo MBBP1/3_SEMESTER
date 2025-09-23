@@ -19,7 +19,7 @@ class TCPClient:
         if not self.sock:
             raise ConnectionError("Client is not connected to a server.")
         self.sock.sendall((message + "\n").encode())
-        print(f"{Colors.yellowColor}Sent message: {message}{Colors.resetColor}")
+        print(f"{Colors.yellow}Sent message: {message}{Colors.reset}")
 
     def close(self):
         """Close the client socket."""
