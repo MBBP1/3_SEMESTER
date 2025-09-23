@@ -30,6 +30,26 @@
                 "kind": "build",
                 "isDefault": true
             }
+        },
+        {
+            "label": "run udp client",
+            "type": "shell",
+            "command": "cls; python src/tcp/Tcp_Client.py",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "run udp client",
+            "type": "shell",
+            "command": "cls; python src/tcp/Tcp_Client.py",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }
