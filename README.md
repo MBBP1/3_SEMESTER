@@ -11,4 +11,7 @@ CTO
     Vores virksomhed hedder CoolNet IoT og opererer inden for grøn IT og datacenter-teknologi. Logoet viser en serverrack med et blå-grønt signalikon, som symboliserer kombinationen af køling, energioptimering og netværksforbindelse.
 #
 
-![Company logo](image.png)
+
+<p align="center">
+  <img src="image.png" alt="Company logo" width="200"/>
+</p>
