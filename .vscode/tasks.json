@@ -32,9 +32,9 @@
             }
         },
         {
-            "label": "run udp client",
+            "label": "run tcp server",
             "type": "shell",
-            "command": "cls; python src/tcp/Tcp_Client.py",
+            "command": "cls; python src/tcp/Tcp_Server.py",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -42,7 +42,7 @@
             }
         },
         {
-            "label": "run udp client",
+            "label": "run tcp client",
             "type": "shell",
             "command": "cls; python src/tcp/Tcp_Client.py",
             "problemMatcher": [],
