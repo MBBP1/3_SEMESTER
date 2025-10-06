@@ -14,7 +14,7 @@
         {
             "label": "run udp server",
             "type": "shell",
-            "command": "cls; python src/udp/Udp_Server.py",
+            "command": "cls; python src/udp/Udp_Server.py", 
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -65,6 +65,16 @@
             "label": "run mqtt client",
             "type": "shell",
             "command": "cls; python -m src.mqtt.Mqtt_Client",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "run mqtt client+server",
+            "type": "shell",
+            "command": "cls; python -m src.mqtt.Mqtt_Client; python -m src.mqtt.Mqtt_Broker", 
             "problemMatcher": [],
             "group": {
                 "kind": "build",
