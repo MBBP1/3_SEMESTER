@@ -15,6 +15,29 @@
     Vores virksomhed hedder CoolNet IoT og opererer inden for grøn IT og datacenter-teknologi. Logoet viser en serverrack med et blå-grønt signalikon, som symboliserer kombinationen af køling, energioptimering og netværksforbindelse.
 #
 
-9120922
+## Protokolvalg
+### **Protokol: MQTT (Message Queuing Telemetry Transport)**
+
+**Begrundelse:**
+- Designet specifikt til **IoT og M2M-kommunikation**.  
+- Understøtter **pålidelig levering (QoS)** trods netværksfejl eller pakketab.  
+- Letvægts og energieffektiv → passer til grøn IT.  
+- Skalerbar – kan håndtere hundreder af sensorer og aktuatorer.  
+- Understøtter **to-vejs kommunikation** (styring af aktuatorer baseret på sensorinput).  
+
+**Underliggende transportlag:** TCP (for stabilitet og fejlretning).
+
+---
+
+
+## Systemarkitektur
+
+
+[ Sensorer ] → [ MQTT Broker ] → [ Controller ] → [ Aktuatorer ]
+
+- Sensorer: temperatur, luftfugtighed, strømforbrug
+- Controller: central logik i Python
+- Aktuatorer: blæser, køleenhed, server-throttle, alarm
 
 #
+
