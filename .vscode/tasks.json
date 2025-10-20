@@ -12,6 +12,20 @@
             }
         },
         {
+            "label": "pytest focus",
+            "detail": "Runs only tests marked with @pytest.mark.focus",
+            "type": "shell",
+            "command": "cls; pytest -v -s -m focus",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
+
+/*         {
             "label": "run udp server",
             "type": "shell",
             "command": "cls; python src/udp/Udp_Server.py", 
@@ -82,4 +96,4 @@
             }
         }
     ]
-}
+} */
