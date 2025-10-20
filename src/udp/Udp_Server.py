@@ -1,53 +1,55 @@
-# Udp_Server.py
 import socket
 import threading
+from src.colors import Colors
 
-class UdpServer:
+class UDPServer:
+    
+
     def __init__(self):
+        # Liste til modtagne beskeder
+        self.receivedMessages = []
         self.server_socket = None
         self.is_running = False
-        self.recievedMessages = []
 
-    def startServer(self, ip="127.0.0.1", port=9999):
-        """Starter UDP serveren"""
+    def startServer(self, ip: str, port: int):
+        """Starter UDP serveren på den angivne IP og port"""
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.server_socket.bind((ip, port))
         self.is_running = True
-        print(f"Server started on {ip}:{port}")
 
-        # Kør serveren i en tråd så den ikke blokerer
-        thread = threading.Thread(target=self._receive_loop, daemon=True)
+        print(f"UDP server started on {ip}:{port}")
+        
+        # Start en tråd til at lytte på beskeder
+        thread = threading.Thread(target=self.listen_for_messages)
+        thread.daemon = True
         thread.start()
 
-    def _receive_loop(self):
-        """Intern metode der modtager beskeder"""
+    def listen_for_messages(self):
+        """Intern metode til at lytte efter indkommende beskeder"""
         while self.is_running:
             try:
-                data, addr = self.server_socket.recvfrom(1024)
+                data, addr = self.server_socket.recvfrom(1024)  # buffer size = 1024 bytes
                 message = data.decode("utf-8")
-                self.recievedMessages.append(message)
-                print(f"Modtaget fra {addr}: {message}")
-            except OSError:
-                break
-
-    def closeServer(self):
-        """Lukker serveren"""
-        self.is_running = False
+                self.receivedMessages.append(message)
+                print(f"{Colors.green}Received from {addr}: {message}{Colors.reset}")
+            except Exception as e:
+                print(f"{Colors.red}Error receiving message:{Colors.reset}", e)
+                self.is_running = False
         if self.server_socket:
             self.server_socket.close()
             self.server_socket = None
-        print("Server closed")
+        print("UDP server stopped")
+    
+    def stopServer(self):
+        self.is_running = False
+        
+        
 
-
+# Eksempel på brug:
 if __name__ == "__main__":
-    server = UdpServer()
-    server.startServer()
+    server = UDPServer()
+    server.startServer("127.0.0.1", 9999)
 
-    try:
-        # Holder serveren kørende indtil brugeren stopper programmet
-        print("UDP server kører... tryk Ctrl+C for at stoppe")
-        while True:
-            pass
-    except KeyboardInterrupt:
-        print("\nStopper server...")
-        server.closeServer()
+    # Holder programmet kørende
+    while True:
+        pass

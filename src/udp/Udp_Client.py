@@ -1,42 +1,38 @@
-# Udp_Client.py
 import socket
 import time
 from datetime import datetime
+from src.colors import Colors
 
-class UdpClient:
-    def __init__(self, server_ip="127.0.0.1", server_port=9999):
+class UDPClient:
+    
+    def __init__(self, server_ip: str = "127.0.0.1", server_port: int = 9999):
+        """Initialiserer klienten med server IP og port"""
         self.server_ip = server_ip
         self.server_port = server_port
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    def sendMessage(self, message="hej server", count=10, delay_ms=1000):
-        """Sender en besked X antal gange med Y ms mellemrum"""
-        for i in range(count):
-            # Lav timestamp i format YYYY-MM-DDThh:mm:ss:xxx
+    def sendMessage(self, message: str, repeat: int = 10, delay_ms: int = 1000):
+        """
+        Sender en besked til serveren
+        :param message: Tekstbeskeden
+        :param repeat: Antal gange beskeden sendes
+        :param delay_ms: Forsinkelse i millisekunder mellem hver besked
+        """
+        for i in range(repeat):
+            # Tilføj timestamp i formatet YYYY-MM-DDThh:mm:ss:xxx
             timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%S:%f")[:-3]
-            full_message = f"{message} ({timestamp})"
+            msg_with_time = f"{message} {timestamp}"
+            
+            # Send besked til server
+            self.client_socket.sendto(msg_with_time.encode("utf-8"), (self.server_ip, self.server_port))
+            
+            print(f"{Colors.yellow}Sent: {msg_with_time}{Colors.reset}")
 
-            self.client_socket.sendto(full_message.encode("utf-8"),
-            (self.server_ip, self.server_port))
-            print(f"Sendt: {full_message}")
-
-            time.sleep(delay_ms / 1000.0)  # konverter ms til sekunder
-
-    def closeClient(self):
-        """Lukker klienten"""
-        self.client_socket.close()
+            # Vent delay_ms millisekunder
+            time.sleep(delay_ms / 1000.0)
 
 
+# Kan køres som main
 if __name__ == "__main__":
-    # Start client med default værdier
-    client = UdpClient()
-    client.sendMessage("hej server", count=1, delay_ms=1000)
-    
-    client.sendMessage(input("Skriv besked: "), count=1, delay_ms=500)
-    while input("Vil du sende flere beskeder? (j/n): ").lower() == 'j':
-        if input("Vil du sende flere beskeder? (j/n): ").lower() == 'j':
-            besked = input("Skriv besked: ")
-            count = int (input("Hvor mange gange? "))
-
-            client.sendMessage(besked, count=count)
-    client.closeClient()
+    client = UDPClient()  # Default 127.0.0.1:9999
+    client.sendMessage("hej server")
