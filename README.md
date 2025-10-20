@@ -1,7 +1,7 @@
 # CoolNet IoT Company
 
 <p align="center">
-  <img src="image.png" alt="Company logo" width="200"/>
+  <img src="images/image.png" alt="Company logo" width="200"/>
 </p>
 
 #
