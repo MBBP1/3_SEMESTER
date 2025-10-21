@@ -47,3 +47,22 @@
 - pip install --upgrade pip
 - pip install pytest amqtt asyncio paho-mqtt pytest-timeout fastapi uvicorn python-multipart httpx
 #
+
+
+
+
+
+
+#### How REST API is Used
+
+```
+{
+  "sensor_id": "temp-001",
+  "temperatur": 24.6,
+  "luftfugtighed": 56,
+  "strøm": 1438,
+  "timestamp": "2025-10-21T08:48:56.096079"
+}
+```
+
+![alt text](image.png)

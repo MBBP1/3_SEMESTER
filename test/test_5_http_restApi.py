@@ -52,6 +52,7 @@ def test_config():
 @pytest.mark.focus
 # Test 404 fejl
 def test_404():
+    #print("test_404\n")
     r = client.get("/sensor/ukendt/current")
     assert r.status_code == 404
     r = client.get("/sensor/ukendt/history")
