@@ -17,7 +17,9 @@
 - [System Arkitektur](#-system-arkitektur)
 - [Test Strategier](#-test-strategier)
 
+
 #
+Zealand Business Academy (zealand.dk)
    -  Hvorfor:
     Formålet med vores virksomhed er at hjælpe virksomheder med at reducere energiforbrug og driftsomkostninger i deres serverrum og datacentre. Overophedning og ineffektiv køling fører ofte til nedbrud og spild af strøm.
 
@@ -30,7 +32,7 @@
 
 ### UDP
 ![alt text](images/udp_test01.png)
-```
+```json
 {
   "company": "CoolNet IoT",
   "sensor_id": "Sensor_807",
@@ -41,19 +43,20 @@
   "type": "server_room_monitoring"
 }
 ```
+
 Vi bruger UDP til at sende sensordata fra vores IoT-enheder i serverrum til vores overvågningssystem.
 
 Hvorfor UDP passer perfekt til os:
 
-    Hastighed over perfekt pålidelighed: Det er vigtigere at få den seneste temperaturmåling (f.eks. 35°C) end at vente på en gammel, tabt pakke (f.eks. 32°C)
+- Hastighed over perfekt pålidelighed: Det er vigtigere at få den seneste temperaturmåling (f.eks. 35°C) end at vente på en gammel, tabt pakke (f.eks. 32°C)
 
-    Realtids respons: Vores system skal kunne reagere med det samme ved overophedning - ikke vente på pakkeretransmission
+- Realtids respons: Vores system skal kunne reagere med det samme ved overophedning - ikke vente på pakkeretransmission
 
-    Tæt datastream: Sensorerne sender data hvert sekund, så et enkelt tabt datapunkt erstattes hurtigt af den næste måling
+- Tæt datastream: Sensorerne sender data hvert sekund, så et enkelt tabt datapunkt erstattes hurtigt af den næste måling
 
-    Lav overhead: Simpel protokol der passer til vens enkle IoT-enheder
+- Lav overhead: Simpel protokol der passer til vens enkle IoT-enheder
 
-For at demonstrere systemets robusthed testede vi med Clumsy network emulator sat til 10% pakketab. Som stadig modtager over 80% af beskederne selv under netværksforstyrrelser
+For at demonstrere systemets robusthed testede vi med Clumsy network emulator sat til 10% pakketab. Som stadig modtager over **80% af beskederne** selv under netværksforstyrrelser
 #
 
 
@@ -77,8 +80,8 @@ Vi bruger TCP til kontrol af aktuatorer fordi:
 Testen beviser at TCP leverer **100% af beskederne** selv med Clumsy sat til 10% pakketab.
 
 ![alt text](images/tcp_test01.png)
-```
-SET_COOLING = 80.0 at Main Cooling
+```json
+"SET_COOLING = 80.0 at Main Cooling"
 {
   "company": "CoolNet IoT",
   "type": "actuator_command",
@@ -88,8 +91,9 @@ SET_COOLING = 80.0 at Main Cooling
   "timestamp": "2025-10-22T17:24:46.670932"
 }
 ```
-### Test med Clumsy
-Vores test beviser at TCP leverer **100% af beskederne** selv når Clumsy er sat til 10% pakketab. Dette demonstrerer at vores kontrolsystem er robust nok til produktionsbrug.
+
+For at demonstrere systemets robusthed og at TCP leverer **100% af beskederne** testede vi med Clumsy network emulator sat til 10% pakketab.
+ 
 #
 
 
@@ -98,7 +102,7 @@ Vores test beviser at TCP leverer **100% af beskederne** selv når Clumsy er sat
 
 
 
-### MQTT til IoT Device Kommunikation
+### MQTT
 
 ### Formål
 Vi bruger MQTT til kommunikation mellem vores IoT-enheder i CoolNet IoT systemet:
@@ -107,7 +111,7 @@ Vi bruger MQTT til kommunikation mellem vores IoT-enheder i CoolNet IoT systemet
 - **Controller** koordinerer kommunikationen mellem enheder
 
 ### Valg af MQTT
-MQTT er det perfekte valg til vores IoT-system af følgende årsager:
+MQTT er et godt valg til vores IoT-system af følgende årsager:
 
 - **Pub/Sub arkitektur**: Sensorer publiserer data, controller subscriber og sender kommandoer til aktuatorer
 - **Lavt strømforbrug**: Ideelt til embedded IoT-enheder med begrænset strøm
@@ -140,7 +144,7 @@ Vores MQTT-system med QoS niveau 1 leverer **100% af beskederne** selv når Clum
 
 
 
-### Fysiske Forbindelser til CoolNet IoT System
+### Fysiske Forbindelser
 
 ### Valg af Fysiske Forbindelser
 
