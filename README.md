@@ -32,7 +32,6 @@
 
 ## Systemarkitektur
 
-
 [ Sensorer ] → [ MQTT Broker ] → [ Controller ] → [ Aktuatorer ]
 
 - Sensorer: temperatur, luftfugtighed, strømforbrug
@@ -40,18 +39,6 @@
 - Aktuatorer: blæser, køleenhed, server-throttle, alarm
 
 #
-
-
-
-## Requirements
-- pip install --upgrade pip
-- pip install pytest amqtt asyncio paho-mqtt pytest-timeout fastapi uvicorn python-multipart httpx
-#
-
-
-
-
-
 
 #### How REST API is Used
 
@@ -66,3 +53,4 @@
 ```
 
 ![alt text](images/restapi01.png)
+
