@@ -1,7 +1,7 @@
-# CoolNet IoT Company
+## CoolNet IoT Company
                                       
 <p align="center">
-  <img src="images/coolnetiotlogo.png" alt="Company logo" width="400"/>
+  <img src="images/coolnetiotlogo3.png" alt="Company logo" width="500"/>
 </p>
 
 ## ToC
@@ -28,19 +28,38 @@
     Vores virksomhed hedder CoolNet IoT og opererer inden for grøn IT og datacenter-teknologi. Logoet viser en serverrack med et blå-grønt signalikon, som symboliserer kombinationen af køling, energioptimering og netværksforbindelse.
 #
 
-## Protokolvalg
-### **Protokol: MQTT (Message Queuing Telemetry Transport)**
+### UDP
+![alt text](images/udp_test01.png)
+```
+{
+  "company": "CoolNet IoT",
+  "sensor_id": "Sensor_807",
+  "timestamp": "2025-10-22T16:43:14.855655",
+  "temperature": 26.4,
+  "humidity": 36.88,
+  "power_consumption": 24.35,
+  "type": "server_room_monitoring"
+}
+```
+Vi bruger UDP til at sende sensordata fra vores IoT-enheder i serverrum til vores overvågningssystem.
 
-**Begrundelse:**
-- Designet specifikt til **IoT og M2M-kommunikation**.  
-- Understøtter **pålidelig levering (QoS)** trods netværksfejl eller pakketab.  
-- Letvægts og energieffektiv → passer til grøn IT.  
-- Skalerbar – kan håndtere hundreder af sensorer og aktuatorer.  
-- Understøtter **to-vejs kommunikation** (styring af aktuatorer baseret på sensorinput).  
+Hvorfor UDP passer perfekt til os:
 
-**Underliggende transportlag:** TCP (for stabilitet og fejlretning).
+    Hastighed over perfekt pålidelighed: Det er vigtigere at få den seneste temperaturmåling (f.eks. 35°C) end at vente på en gammel, tabt pakke (f.eks. 32°C)
 
----
+    Realtids respons: Vores system skal kunne reagere med det samme ved overophedning - ikke vente på pakkeretransmission
+
+    Tæt datastream: Sensorerne sender data hvert sekund, så et enkelt tabt datapunkt erstattes hurtigt af den næste måling
+
+    Lav overhead: Simpel protokol der passer til vens enkle IoT-enheder
+
+For at demonstrere systemets robusthed testede vi med Clumsy network emulator sat til 10% pakketab. Som stadig modtager over 80% af beskederne selv under netværksforstyrrelser
+#
+
+
+
+
+
 
 ### TCP til Aktuatorstyring
 
@@ -71,36 +90,15 @@ SET_COOLING = 80.0 at Main Cooling
 ```
 ### Test med Clumsy
 Vores test beviser at TCP leverer **100% af beskederne** selv når Clumsy er sat til 10% pakketab. Dette demonstrerer at vores kontrolsystem er robust nok til produktionsbrug.
+#
 
 
-### UDP
-![alt text](images/udp_test01.png)
-```
-{
-  "company": "CoolNet IoT",
-  "sensor_id": "Sensor_807",
-  "timestamp": "2025-10-22T16:43:14.855655",
-  "temperature": 26.4,
-  "humidity": 36.88,
-  "power_consumption": 24.35,
-  "type": "server_room_monitoring"
-}
-```
-Vi bruger UDP til at sende sensordata fra vores IoT-enheder i serverrum til vores overvågningssystem.
 
-Hvorfor UDP passer perfekt til os:
 
-    Hastighed over perfekt pålidelighed: Det er vigtigere at få den seneste temperaturmåling (f.eks. 35°C) end at vente på en gammel, tabt pakke (f.eks. 32°C)
 
-    Realtids respons: Vores system skal kunne reagere med det samme ved overophedning - ikke vente på pakkeretransmission
 
-    Tæt datastream: Sensorerne sender data hvert sekund, så et enkelt tabt datapunkt erstattes hurtigt af den næste måling
 
-    Lav overhead: Simpel protokol der passer til vens enkle IoT-enheder
-
-For at demonstrere systemets robusthed testede vi med Clumsy network emulator sat til 10% pakketab. Som stadig modtager over 80% af beskederne selv under netværksforstyrrelser
-
-## MQTT til IoT Device Kommunikation
+### MQTT til IoT Device Kommunikation
 
 ### Formål
 Vi bruger MQTT til kommunikation mellem vores IoT-enheder i CoolNet IoT systemet:
@@ -128,9 +126,9 @@ Vores MQTT-system med QoS niveau 1 leverer **100% af beskederne** selv når Clum
 ![alt text](images\mqtt_test01.png)
 
 
-## Systemarkitektur
+### Systemarkitektur
 
-[ Sensorer ] → [ MQTT Broker ] → [ Controller ] → [ Aktuatorer ]
+[ Sensorer ] - [ MQTT Broker ] - [ Controller ] - [ Aktuatorer ]
 
 - Sensorer: temperatur, luftfugtighed, strømforbrug
 - Controller: central logik i Python
@@ -138,7 +136,39 @@ Vores MQTT-system med QoS niveau 1 leverer **100% af beskederne** selv når Clum
 
 #
 
-#### How REST API is Used
+
+
+
+
+### Fysiske Forbindelser til CoolNet IoT System
+
+### Valg af Fysiske Forbindelser
+
+I CoolNet IoT systemet bruger vi en kombination af fysiske forbindelser afhængigt af enhedernes placering og behov:
+
+#### 1. **Ethernet (Kablet Forbindelse)**
+- **Anvendelse**: Primær forbindelse til serverrummets centrale enheder
+- **Hvorfor**: 
+  - Høj pålidelighed og bandwidth
+  - Lav latency for realtids kontrol
+  - God elektromagnetisk kompatibilitet i miljøer med meget elektronik
+  - Sikkerhed - fysisk adgangskontrol til netværk
+
+#### 2. **Wi-Fi (Trådløs)**
+- **Anvendelse**: Sensorer og aktuatorer hvor kabler er upraktiske
+- **Hvorfor**:
+  - Fleksibel installation - ingen kabeltrækning nødvendig
+  - Let at tilføje nye enheder
+  - God dækning i store serverrum og datacentre
+  - Understøtter roaming mellem access points
+
+#
+
+
+
+
+
+### REST API 
 
 ![alt text](images/restapi01.png)
 
@@ -164,27 +194,6 @@ Vores MQTT-system med QoS niveau 1 leverer **100% af beskederne** selv når Clum
 
 
 
-## Fysiske Forbindelser til CoolNet IoT System
-
-### Valg af Fysiske Forbindelser
-
-I CoolNet IoT systemet bruger vi en kombination af fysiske forbindelser afhængigt af enhedernes placering og behov:
-
-#### 1. **Ethernet (Kablet Forbindelse)**
-- **Anvendelse**: Primær forbindelse til serverrummets centrale enheder
-- **Hvorfor**: 
-  - Høj pålidelighed og bandwidth
-  - Lav latency for realtids kontrol
-  - God elektromagnetisk kompatibilitet i miljøer med meget elektronik
-  - Sikkerhed - fysisk adgangskontrol til netværk
-
-#### 2. **Wi-Fi (Trådløs)**
-- **Anvendelse**: Sensorer og aktuatorer hvor kabler er upraktiske
-- **Hvorfor**:
-  - Fleksibel installation - ingen kabeltrækning nødvendig
-  - Let at tilføje nye enheder
-  - God dækning i store serverrum og datacentre
-  - Understøtter roaming mellem access points
 
 
 
