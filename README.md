@@ -1,8 +1,21 @@
 # CoolNet IoT Company
-
+                                      
 <p align="center">
-  <img src="images/companylogo.png" alt="Company logo" width="200"/>
+  <img src="images/companylogo_wide.png" alt="Company logo" />
 </p>
+
+## ToC
+
+- [Virksomhedsformål](#virksomhedsformål)
+- [Protokol Implementeringer](#-protokol-implementeringer)
+  - [UDP - Sensor Data Transmission](#udp---sensor-data-transmission)
+  - [TCP - Aktuator Control](#tcp---aktuator-control)
+  - [MQTT - IoT Device Kommunikation](#mqtt---iot-device-kommunikation)
+- [REST API](#-rest-api)
+- [Fysiske Forbindelser](#-fysiske-forbindelser)
+- [Data Persistence & OOP](#-data-persistence--oop)
+- [System Arkitektur](#-system-arkitektur)
+- [Test Strategier](#-test-strategier)
 
 #
    -  Hvorfor:
@@ -199,12 +212,12 @@ I CoolNet IoT systemet bruger vi en kombination af fysiske forbindelser afhængi
 - `SensorConfig` - Konfigurations model
 
 ### Test Coverage
-- ✅ Empty file initialization
-- ✅ Existing data loading  
-- ✅ Data persistence verification
-- ✅ Cross-session data availability
-- ✅ Error handling (404, 400)
-- ✅ Configuration management
+-  Empty file initialization
+-  Existing data loading  
+-  Data persistence verification
+-  Cross-session data availability
+-  Error handling (404, 400)
+-  Configuration management
 
 *Unit-test*
 ![alt text](images/persistence_test01.png)
