@@ -4,7 +4,7 @@ from src.http.rest_api_eksempel_5 import app
 
 client = TestClient(app)
 
-@pytest.mark.focus
+#@pytest.mark.focus
 # Test POST sensordata og GET aktuel data
 def test_post_and_get_current():
     payload = {
@@ -26,7 +26,7 @@ def test_post_and_get_current():
     json_get = r_get.json()
     assert json_get["temperatur"] == 25.0
 
-@pytest.mark.focus
+#@pytest.mark.focus
 # Test historik
 def test_history():
     r = client.get("/sensor/sensor1/history")
@@ -35,7 +35,7 @@ def test_history():
     assert len(json_data) >= 1
     assert "temperatur" in json_data[0]
 
-@pytest.mark.focus
+#@pytest.mark.focus
 # Test config upload og læs
 def test_config():
     config_payload = {
@@ -49,7 +49,7 @@ def test_config():
     json_data = r_get.json()
     assert json_data["config"]["interval"] == "10s"
 
-@pytest.mark.focus
+#@pytest.mark.focus
 # Test 404 fejl
 def test_404():
     #print("test_404\n")

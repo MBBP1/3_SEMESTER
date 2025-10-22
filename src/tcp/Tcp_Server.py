@@ -1,74 +1,66 @@
 import socket
-
-import socket
 import threading
 from src.colors import Colors
 
-
 class TCPServer:
-    def __init__(self, host="127.0.0.1", port=12345, buffer_size=2):
+    def __init__(self, host="127.0.0.1", port=12345):
         self.host = host
         self.port = port
-        self.buffer_size = buffer_size
         self.server_sock = None
         self.conn = None
         self.addr = None
         self._running = False
-        self._thread = None
-
+        
         self.receivedMessages = []
-        self.warnings = []
-        self.errors =[]
+        self.actuator_commands = []
 
-    def start(self, expected_receive_interval=1.0, background=True):
-        """Start the TCP server. If background=True, run in a separate thread."""
+    def start(self, background=True):
         if background:
-            self._thread = threading.Thread(
-                target=self._run, args=(expected_receive_interval,), daemon=True
-            )
-            self._thread.start()
+            thread = threading.Thread(target=self._run, daemon=True)
+            thread.start()
         else:
-            self._run(expected_receive_interval)
+            self._run()
 
-    def _run(self, expected_receive_interval):
-        """Internal server loop."""
+    def _run(self):
         self.server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_sock.bind((self.host, self.port))
         self.server_sock.listen(1)
 
-        print(f"TCP server listening on {self.host}:{self.port}")
+        print(f"CoolNet IoT Control Server listening on {self.host}:{self.port}")
 
         try:
             self.conn, self.addr = self.server_sock.accept()
-            print(f"Connected by {self.addr}")
-            self.conn.settimeout(expected_receive_interval)
-
-            buffer = ""
-            print("---")
+            print(f"Actuator connected from {self.addr}")
+            
             self._running = True
             while self._running:
-                try:
-                    data = self.conn.recv(self.buffer_size).decode()
-                    if not data:
-                        break
-                    buffer += data
-                    while "\n" in buffer:
-                        msg, buffer = buffer.split("\n", 1)
-                        print(f"{Colors.green}Received: {msg}{Colors.reset}")
-                        self.receivedMessages.append(msg)
-                except socket.timeout:
-                    warningMsg = "Socket timeout: No message received" 
-                    print(f"{Colors.orange}Warning, {warningMsg}{Colors.reset}")
-                    self.warnings.append(warningMsg)
+                data = self.conn.recv(1024).decode()
+                if not data:
+                    break
+                
+                # Modtag kommandoer til aktuatorer
+                print(f"{Colors.green}Command received: {data}{Colors.reset}")
+                self.receivedMessages.append(data)
+                
+                # Simuler eksekvering af kommando
+                if "SET_COOLING" in data:
+                    self.actuator_commands.append("Cooling system adjusted")
+                elif "SET_PERFORMANCE" in data:
+                    self.actuator_commands.append("Server performance limited")
+                elif "ALERT_TECH" in data:
+                    self.actuator_commands.append("Technician alerted")
 
-        except KeyboardInterrupt:
-            print("\nServer shutting down...")
-
+        except Exception as e:
+            print(f"{Colors.red}Server error: {e}{Colors.reset}")
         finally:
-            self.close()
+            # Tilføj en check så vi ikke lukker to gange
+            if self._running:
+                self.close()
 
     def close(self):
-        """Close the connection and server socket."""
+        if not self._running:
+            return  # Allerede lukket
+            
         self._running = False
         if self.conn:
             self.conn.close()
@@ -76,15 +68,4 @@ class TCPServer:
         if self.server_sock:
             self.server_sock.close()
             self.server_sock = None
-        print("Server closed.")
-
-
-if __name__ == "__main__":
-    server = TCPServer()
-    try:
-        # Run in foreground (blocking) when started from terminal
-        server.start(expected_receive_interval=1.0, background=False)
-    except KeyboardInterrupt:
-        print("\nServer interrupted by user.")
-    finally:
-        server.close()
+        print("Control Server closed.")

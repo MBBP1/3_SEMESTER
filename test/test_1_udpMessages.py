@@ -15,7 +15,8 @@ def test_udp_client_server():
     server = UDPServer()
     server.startServer("127.0.0.1", 9999)
     client = UDPClient("127.0.0.1", 9999)
-    client.sendMessage("test besked", repeat=messages_to_send, delay_ms=delay_ms)
+    #client.sendMessage("test besked", repeat=messages_to_send, delay_ms=delay_ms)
+    client.sendMessage(repeat=10, delay_ms=1000)  # Sender CoolNet sensor data
 
     time.sleep(1)
     sent_count = messages_to_send
