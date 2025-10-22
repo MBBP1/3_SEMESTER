@@ -1,73 +1,125 @@
 from fastapi import FastAPI, Form, HTTPException
 from pydantic import BaseModel
 from fastapi.responses import HTMLResponse
+from datetime import datetime
 
-app = FastAPI()
+app = FastAPI(title="CoolNet IoT API", description="REST API for CoolNet IoT sensor management")
 
 # "Database" i hukommelsen
-db: dict[str, dict] = {}
+sensor_db: dict[str, dict] = {}
+sensor_history: list[dict] = []
 
-class Person(BaseModel):
-  person_id: str
-  navn: str
-  alder: int
+class SensorData(BaseModel):
+    sensor_id: str
+    temperature: float
+    humidity: float
+    power_consumption: float
+    location: str
 
-# POST: Gem en person i "db"
-@app.post("/person")
-def create_person(person_id: str = Form(...), navn: str = Form(...), alder: int = Form(...)):
-  db[person_id] = {"person_id": person_id, "navn": navn, "alder": alder}
-  return {"status": "gemt", "data": db[person_id]}
+# POST: Gem sensordata
+@app.post("/sensors/data")
+def create_sensor_data(
+    sensor_id: str = Form(...),
+    temperature: float = Form(...),
+    humidity: float = Form(...),
+    power_consumption: float = Form(...),
+    location: str = Form(...)
+):
+    timestamp = datetime.now().isoformat()
+    sensor_data = {
+        "sensor_id": sensor_id,
+        "temperature": temperature,
+        "humidity": humidity,
+        "power_consumption": power_consumption,
+        "location": location,
+        "timestamp": timestamp,
+        "company": "CoolNet IoT"
+    }
+    
+    # Gem som aktuel data
+    sensor_db[sensor_id] = sensor_data
+    # Tilføj til historik
+    sensor_history.append(sensor_data)
+    
+    return {"status": "data_received", "data": sensor_data}
 
+# GET: Hent aktuel sensordata
+@app.get("/sensors/data")
+def get_all_sensors():
+    if not sensor_db:
+        return {"status": "error", "message": "No sensor data available"}
+    return {"status": "ok", "data": sensor_db}
 
-# GET: Hent en person fra "db"
-@app.get("/person")
-def read_person():
-  raise HTTPException(status_code=400, detail="path skal være /person/<person_id>")
+# GET: Hent specifik sensor
+@app.get("/sensors/data/{sensor_id}")
+def get_sensor(sensor_id: str):
+    if sensor_id not in sensor_db:
+        return {"status": "error", "message": f"Sensor '{sensor_id}' not found"}
+    return {"status": "ok", "data": sensor_db[sensor_id]}
 
-# GET: Hent en person fra "db"
-@app.get("/person/{person_id}")
-def read_person(person_id: str):
-  if person_id not in db:
-      return {"status": "fejl", "besked": f"Person med id '{person_id}' findes ikke"}
-  return {"status": "ok", "data": db[person_id]}
+# GET: Hent historik
+@app.get("/sensors/history")
+def get_sensor_history():
+    if not sensor_history:
+        return {"status": "error", "message": "No historical data available"}
+    return {"status": "ok", "data": sensor_history}
 
-@app.get("/new", response_class=HTMLResponse)
-def new_person_form():
-  return f"""
-  <!DOCTYPE html>
-  <html lang="da">
-  <head>
-    <meta charset="UTF-8">
-    <title>Opret Person</title>
-  </head>
-  <body>
-    <h2>Opret en person</h2>
-    <p><i>⚠ (normalt skal dette være på en frontend og ikke som her på en backend)</i></p>
-    <form action="/person" method="post">
-      <label for="person_id">ID:</label><br>
-      <input type="text" id="person_id" name="person_id" required><br><br>
-      
-      <label for="navn">Navn:</label><br>
-      <input type="text" id="navn" name="navn" required><br><br>
-      
-      <label for="alder">Alder:</label><br>
-      <input type="number" id="alder" name="alder" required><br><br>
-      
-      <button type="submit">Gem</button>
-    </form>
-  </body>
-  </html>
-  """
+# GET: Hent historik for specifik sensor
+@app.get("/sensors/history/{sensor_id}")
+def get_sensor_history_by_id(sensor_id: str):
+    sensor_hist = [data for data in sensor_history if data["sensor_id"] == sensor_id]
+    if not sensor_hist:
+        return {"status": "error", "message": f"No history found for sensor '{sensor_id}'"}
+    return {"status": "ok", "data": sensor_hist}
 
+# Fejlhåndtering
+@app.get("/sensors")
+def get_sensors_without_action():
+    raise HTTPException(status_code=400, detail="Path must be /sensors/data or /sensors/data/<sensor_id>")
 
-# Kør i terminal/console med: 
-# uvicorn src.http.rest_api_eksempel_3:app --reload
-#
-# Kør i browser:
-# Website: http://127.0.0.1:8000/ 
-# Test: http://127.0.0.1:8000/new for at oprette en ny person med person_id '1337'
-# Test: http://127.0.0.1:8000/person/1337 skal vise personen
-# Test: http://127.0.0.1:8000/person/1338 skal vise en 404
-# Test: http://127.0.0.1:8000/person/ skal vise en 400 at man skal bruge 'person_id'
+# HTML form til testing
+@app.get("/new-sensor", response_class=HTMLResponse)
+def new_sensor_form():
+    return """
+    <!DOCTYPE html>
+    <html lang="da">
+    <head>
+        <meta charset="UTF-8">
+        <title>CoolNet IoT - Add Sensor Data</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; }
+            .container { max-width: 500px; }
+            label { display: block; margin-top: 10px; }
+            input { width: 100%; padding: 8px; margin: 5px 0; }
+            button { background: #0066cc; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>CoolNet IoT - Add Sensor Data</h2>
+            <p><i>⚠ Test interface for sensor data submission</i></p>
+            <form action="/sensors/data" method="post">
+                <label for="sensor_id">Sensor ID:</label>
+                <input type="text" id="sensor_id" name="sensor_id" value="sensor_001" required>
+                
+                <label for="temperature">Temperature (°C):</label>
+                <input type="number" id="temperature" name="temperature" step="0.1" value="28.5" required>
+                
+                <label for="humidity">Humidity (%):</label>
+                <input type="number" id="humidity" name="humidity" step="0.1" value="45.2" required>
+                
+                <label for="power_consumption">Power Consumption (kW):</label>
+                <input type="number" id="power_consumption" name="power_consumption" step="0.1" value="15.7" required>
+                
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" value="Server Rack A" required>
+                
+                <button type="submit">Submit Sensor Data</button>
+            </form>
+        </div>
+    </body>
+    </html>
+    """
 
-# Documentation: http://127.0.0.1:8000/docs
+# Kør med: uvicorn src.http.rest_api_eksempel_3:app --reload
+# Docs: http://127.0.0.1:8000/docs

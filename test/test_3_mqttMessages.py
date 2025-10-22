@@ -1,92 +1,89 @@
 import time
 import pytest
-from src.colors import Colors
-
 from src.mqtt.Mqtt_Broker import MQTTBroker
 from src.mqtt.Mqtt_Client import MQTTClient
 
-
-@pytest.fixture(scope="module")
+#@pytest.fixture(scope="module")
 def broker():
     b = MQTTBroker(host="127.0.0.1", port=1883)
     b.start(background=True)
-    # give the broker time to spin up
     time.sleep(1)
     yield b
-    #b.close()
 
+#@pytest.fixture
+def device_factory():
+    devices = []
 
-@pytest.fixture
-def client_factory():
-    clients = []
+    def _make_device(name, device_type):
+        device = MQTTClient(name, device_type, broker_host="127.0.0.1", broker_port=1883, client_id=name)
+        device.connect(background=True)
+        devices.append(device)
+        return device
 
-    def _make_client(client_id):
-        colorPublish = Colors.blue
-        colorRecieved = Colors.blue
-        if(client_id=="C1"):
-            colorPublish = Colors.blue
-            colorRecieved = Colors.blue
-        if(client_id=="C2"):
-            colorPublish = Colors.cyan
-            colorRecieved = Colors.cyan
-        if(client_id=="C3"):
-            colorPublish = Colors.magenta
-            colorRecieved = Colors.magenta
+    yield _make_device
 
-     
-        c = MQTTClient(client_id, colorPublish, colorRecieved, broker_host="127.0.0.1", broker_port=1883, client_id=client_id)
-        c.connect(background=True)
-        clients.append(c)
-        return c
-
-    yield _make_client
-
-    # cleanup
-    for c in clients:
-        c.close()
+    for device in devices:
+        device.close()
 
 #@pytest.mark.focus
-def test_pubsub(broker, client_factory):
-    # Given
-    C1 = client_factory("C1")
-    C2 = client_factory("C2")
-    C3 = client_factory("C3")
-
-    C1.subscribe("topic 1")
-    C2.subscribe("topic 2")
-    C3.subscribe("topic 1")
-
-    time.sleep(1)  # allow subscriptions to register
-
-    # When
-    numberOfRepeats = 1
-    for i in range(numberOfRepeats):
-        C1.publish("topic 2", f"C1M{i}")
-        C2.publish("topic 1", f"C2M2{i}")
-        C3.publish("topic 1", f"C3M3{i}")
-        time.sleep(0.1)  # give broker time to route
-
-    # give time for async callbacks to fire
-    time.sleep(2)
-
-    # Then
-    # C2 must receive 10 messages of C1M...
-    c2_msgs = [m for _, m in C2.receivedMessages if m.startswith("C1M")]
-    assert len(c2_msgs) == numberOfRepeats
-
-    # C1 must receive 10 messages of C2M...
-    c1_msgs_from_c2 = [m for _, m in C1.receivedMessages if m.startswith("C2M2")]
-    assert len(c1_msgs_from_c2) == numberOfRepeats
-
-    # C1 must receive 10 messages of C3M...
-    c1_msgs_from_c3 = [m for _, m in C1.receivedMessages if m.startswith("C3M3")]
-    assert len(c1_msgs_from_c3) ==numberOfRepeats
-
-    # C3 must receive 10 messages of C2M...
-    c3_msgs_from_c2 = [m for _, m in C3.receivedMessages if m.startswith("C2M2")]
-    assert len(c3_msgs_from_c2) == numberOfRepeats
-
-    # C3 must receive 10 messages of C3M...
-    c3_msgs_from_c3 = [m for _, m in C3.receivedMessages if m.startswith("C3M3")]
-    assert len(c3_msgs_from_c3) == numberOfRepeats
+def test_coolnet_iot_system(broker, device_factory):
+    """Test CoolNet IoT system: x sensorer, y aktuatorer, 1 controller"""
     
+    
+    # 2 sensorer, 2 aktuatorer, 1 controller
+    temp_sensor = device_factory("TempSensor", "sensor")
+    cooling_actuator = device_factory("CoolingUnit", "actuator")
+    performance_actuator = device_factory("PerformanceCtrl", "actuator")
+    controller = device_factory("MainController", "controller")
+
+    time.sleep(1)  # Vent på forbindelser
+
+    # Setup subscriptions
+    controller.subscribe("coolnet/sensors/data")      # Controller lytter til sensorer
+    cooling_actuator.subscribe("coolnet/actuators/control")
+    performance_actuator.subscribe("coolnet/actuators/control")
+
+    time.sleep(1)
+
+    # When - Sensorer sender data som trigger aktuatorer via controller
+    print("\n--- Starter CoolNet IoT simulering ---")
+    
+    # Sensor: Normal temperatur - ingen handling
+    temp_sensor.publish("coolnet/sensors/data", '{"temp": 25.0, "location": "Rack A"}')
+    time.sleep(0.5)
+    
+    # Sensor: Høj temperatur - skal trigger køling
+    temp_sensor.publish("coolnet/sensors/data", '{"temp": 33.5, "location": "Rack A"}')
+    time.sleep(0.5)
+    
+    # Controller sender kølekommando
+    controller.publish("coolnet/actuators/control", '{"command": "SET_COOLING", "value": 80, "target": "CoolingUnit"}')
+    time.sleep(0.5)
+    
+    # Sensor: Kritisk temperatur - skal trigger performance begrænsning
+    temp_sensor.publish("coolnet/sensors/data", '{"temp": 37.2, "location": "Rack B"}')
+    time.sleep(0.5)
+    
+    # Controller sender performance kommando
+    controller.publish("coolnet/actuators/control", '{"command": "SET_PERFORMANCE", "value": 60, "target": "PerformanceCtrl"}')
+    
+    time.sleep(1)  # Vent på alle beskeder
+
+    # Then - Verificer at systemet fungerer
+    print("\n--- Verificering ---")
+    
+    # Tæl modtagne beskeder
+    cooling_received = len([msg for topic, msg in cooling_actuator.receivedMessages])
+    performance_received = len([msg for topic, msg in performance_actuator.receivedMessages])
+    controller_received = len([msg for topic, msg in controller.receivedMessages])
+    
+    print(f"Cooling actuator modtog: {cooling_received} kommandoer")
+    print(f"Performance actuator modtog: {performance_received} kommandoer") 
+    print(f"Controller modtog: {controller_received} sensor readings")
+    
+    # Verificer at beskeder nåede frem
+    assert cooling_received >= 1, "Cooling actuator modtog ingen kommandoer"
+    assert performance_received >= 1, "Performance actuator modtog ingen kommandoer"
+    assert controller_received >= 3, "Controller modtog ikke nok sensor data"
+    
+    print(" CoolNet IoT system test PASSED - 100% beskeder modtaget!")

@@ -87,8 +87,32 @@ Hvorfor UDP passer perfekt til os:
 
 For at demonstrere systemets robusthed testede vi med Clumsy network emulator sat til 10% pakketab. Som stadig modtager over 80% af beskederne selv under netværksforstyrrelser
 
+## MQTT til IoT Device Kommunikation
 
+### Formål
+Vi bruger MQTT til kommunikation mellem vores IoT-enheder i CoolNet IoT systemet:
+- **Sensorer** måler temperatur og andre parametre i serverrum
+- **Aktuatorer** styrer kølesystemer og serverperformance  
+- **Controller** koordinerer kommunikationen mellem enheder
 
+### Valg af MQTT
+MQTT er det perfekte valg til vores IoT-system af følgende årsager:
+
+- **Pub/Sub arkitektur**: Sensorer publiserer data, controller subscriber og sender kommandoer til aktuatorer
+- **Lavt strømforbrug**: Ideelt til embedded IoT-enheder med begrænset strøm
+- **Fleksibel topologi**: Let at tilføje nye sensorer og aktuatorer uden at ændre hele systemet
+- **QoS garantier**: Kan sikre 100% levering af kritiske kontrolkommandoer
+- **Lav latency**: Hurtig kommunikation mellem enheder er afgørende for realtids kontrol
+
+### System Arkitektur
+- **Sensorer** → Publisher på `coolnet/sensors/data`
+- **Controller** → Subscriber på sensor data + Publisher på kontrolkommandoer
+- **Aktuatorer** → Subscriber på `coolnet/actuators/control`
+
+### Test med Clumsy
+Vores MQTT-system med QoS niveau 1 leverer **100% af beskederne** selv når Clumsy er sat til 10% pakketab, hvilket demonstrerer systemets robusthed.
+
+![alt text](images\mqtt_test01.png)
 
 
 ## Systemarkitektur
@@ -103,15 +127,85 @@ For at demonstrere systemets robusthed testede vi med Clumsy network emulator sa
 
 #### How REST API is Used
 
-```
+![alt text](images/restapi01.png)
+
+### API Response Eksempler
+```json
 {
-  "sensor_id": "temp-001",
-  "temperatur": 24.6,
-  "luftfugtighed": 56,
-  "strøm": 1438,
-  "timestamp": "2025-10-21T08:48:56.096079"
+  "status": "ok",
+  "data": {
+    "sensor_001": {
+      "sensor_id": "sensor_001",
+      "temperature": 28.5,
+      "humidity": 45.2,
+      "power_consumption": 15.7,
+      "location": "Server Rack A",
+      "timestamp": "2025-10-22T20:15:47.667123",
+      "company": "CoolNet IoT"
+    }
+  }
 }
 ```
 
-![alt text](images/restapi01.png)
+![alt text](images/restapi_test02.png)
+
+
+
+## Fysiske Forbindelser til CoolNet IoT System
+
+### Valg af Fysiske Forbindelser
+
+I CoolNet IoT systemet bruger vi en kombination af fysiske forbindelser afhængigt af enhedernes placering og behov:
+
+#### 1. **Ethernet (Kablet Forbindelse)**
+- **Anvendelse**: Primær forbindelse til serverrummets centrale enheder
+- **Hvorfor**: 
+  - Høj pålidelighed og bandwidth
+  - Lav latency for realtids kontrol
+  - God elektromagnetisk kompatibilitet i miljøer med meget elektronik
+  - Sikkerhed - fysisk adgangskontrol til netværk
+
+#### 2. **Wi-Fi (Trådløs)**
+- **Anvendelse**: Sensorer og aktuatorer hvor kabler er upraktiske
+- **Hvorfor**:
+  - Fleksibel installation - ingen kabeltrækning nødvendig
+  - Let at tilføje nye enheder
+  - God dækning i store serverrum og datacentre
+  - Understøtter roaming mellem access points
+
+
+
+
+
+## Data Persistence og OOP Arkitektur
+
+### Hvorfor gemme og loade data?
+- **Data Sikkerhed**: Sikrer at sensordata ikke går tabt ved genstart
+- **System Robusthed**: Kan genstartes uden data-tab
+- **Historisk Analyse**: Muliggør langtidsanalyse af trends
+- **Disaster Recovery**: Data kan gendannes ved systemfejl
+
+### Fordele ved OOP og Class Opdeling
+- **Separation of Concerns**: Hver klasse har et specifikt ansvar
+- **Genbrugelighed**: `FlatFileLoader` kan bruges til andre projekter
+- **Testbarhed**: Enkelte komponenter kan testes isoleret
+- **Vedligeholdelse**: Lettere at rette fejl og tilføje features
+- **Skalerbarhed**: Let at udvide med nye data kilder (SQL, NoSQL)
+
+### Arkitektur
+- `CoolNetRestAPI` - Hoved API logik og endpoint management
+- `FlatFileLoader` - Data persistence lag (gem/load JSON)
+- `SensorData` - Data model validering med Pydantic
+- `SensorConfig` - Konfigurations model
+
+### Test Coverage
+- ✅ Empty file initialization
+- ✅ Existing data loading  
+- ✅ Data persistence verification
+- ✅ Cross-session data availability
+- ✅ Error handling (404, 400)
+- ✅ Configuration management
+
+*Unit-test*
+![alt text](images/persistence_test01.png)
 

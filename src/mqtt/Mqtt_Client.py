@@ -1,12 +1,14 @@
 import time
 import threading
 import paho.mqtt.client as mqtt
+import json
+from datetime import datetime
 from src.colors import Colors
 
-
 class MQTTClient:
-    def __init__(self, name="client", colorPublish=Colors.green, colorRecieved=Colors.bright_green, broker_host="127.0.0.1", broker_port=1883, client_id=None):
+    def __init__(self, name="client", device_type="sensor", colorPublish=Colors.green, colorRecieved=Colors.bright_green, broker_host="127.0.0.1", broker_port=1883, client_id=None):
         self.name = name
+        self.device_type = device_type  # "sensor", "actuator", "controller"
         self.colorPublish = colorPublish
         self.colorRecieved = colorRecieved 
         
@@ -16,6 +18,7 @@ class MQTTClient:
         self._connected = False
         self._thread = None
         self.receivedMessages = []
+        self.actions_performed = []
 
         # Callbacks
         self.client.on_connect = self._on_connect
@@ -27,23 +30,21 @@ class MQTTClient:
         self.client.connect(self.broker_host, self.broker_port, keepalive=60)
 
         if background:
-            # run network loop in separate thread
             self._thread = threading.Thread(target=self.client.loop_forever, daemon=True)
             self._thread.start()
         else:
-            # blocking
             self.client.loop_start()
             while not self._connected:
                 time.sleep(0.1)
 
-        print(f"* {self.name} Connected to broker {self.broker_host}:{self.broker_port}")
+        print(f"* {self.name} ({self.device_type}) Connected to broker")
     
     def wait_until_connected(self, timeout=5):
         """Block until connected or timeout"""
         start = time.time()
         while not self._connected:
             if time.time() - start > timeout:
-                raise TimeoutError("{MQTT client failed to connect in time")
+                raise TimeoutError("MQTT client failed to connect in time")
             time.sleep(0.1)
 
     def _on_connect(self, client, userdata, flags, rc):
@@ -61,6 +62,56 @@ class MQTTClient:
         message = msg.payload.decode()
         print(f"{self.colorRecieved}* {self.name}: Received: {msg.topic} -> {message}{Colors.reset}")
         self.receivedMessages.append((msg.topic, message))
+        
+        # Handle actuator commands
+        if self.device_type == "actuator" and msg.topic == "coolnet/actuators/control":
+            self._handle_actuator_command(message)
+
+    def _handle_actuator_command(self, message):
+        """Handle commands for actuators - kun hvis de er tiltænkt denne enhed"""
+        try:
+            command = json.loads(message)
+            target = command.get("target", "")
+            
+            # Kun håndter kommandoer der er tiltænkt "All" eller denne specifikke enhed
+            if target == "All" or target == self.name:
+                if command.get("command") == "SET_COOLING":
+                    self.actions_performed.append(f"Cooling set to {command.get('value')}%")
+                    print(f"{Colors.cyan}* {self.name}: Cooling adjusted to {command.get('value')}%{Colors.reset}")
+                elif command.get("command") == "SET_PERFORMANCE":
+                    self.actions_performed.append(f"Performance limited to {command.get('value')}%")
+                    print(f"{Colors.cyan}* {self.name}: Performance limited to {command.get('value')}%{Colors.reset}")
+                elif command.get("command") == "ALERT_TECH":
+                    self.actions_performed.append("Technician alerted")
+                    print(f"{Colors.red}* {self.name}: TECHNICIAN ALERTED!{Colors.reset}")
+        except:
+            pass
+
+    def publish_sensor_data(self, temperature, humidity, power_consumption, location):
+        """Publish sensor data from IoT devices"""
+        sensor_data = {
+            "company": "CoolNet IoT",
+            "device_id": self.name,
+            "type": "sensor_data",
+            "temperature": temperature,
+            "humidity": humidity,
+            "power_consumption": power_consumption,
+            "location": location,
+            "timestamp": datetime.now().isoformat()
+        }
+        self.publish("coolnet/sensors/data", json.dumps(sensor_data))
+
+    def publish_control_command(self, command, value, target_actuator):
+        """Publish control commands from controller"""
+        control_data = {
+            "company": "CoolNet IoT", 
+            "type": "control_command",
+            "command": command,
+            "value": value,
+            "target": target_actuator,
+            "timestamp": datetime.now().isoformat()
+        }
+        self.publish("coolnet/actuators/control", json.dumps(control_data))
 
     def publish(self, topic, message):
         """Publish a message to a topic."""
@@ -80,22 +131,4 @@ class MQTTClient:
         """Disconnect cleanly."""
         if self._connected:
             self.client.disconnect()
-        print("* {self.name}: MQTT client closed.")
-
-
-if __name__ == "__main__":
-    # Example usage
-    client = MQTTClient("MQTT_client", Colors.green, Colors.bright_green, broker_host="127.0.0.1", broker_port=1883)
-    client.connect(background=True)
-    client.wait_until_connected()
-
-    client.subscribe("test/topic")
-
-    for n in range(5):
-        timestamp_us = int(time.time() * 1_000_000)
-        msg = f"hello world {timestamp_us}"
-        client.publish("test/topic", msg)
-        time.sleep(1)
-
-    time.sleep(2)  # give some time to receive messages
-    client.close()
+        print(f"* {self.name}: MQTT client closed.")
