@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sensor Details - CoolNet IoT</title>
+    <style>
+        body { font-family: Arial; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .sensor-detail { border: 1px solid #ddd; padding: 20px; margin: 20px 0; }
+        .back-link { display: block; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Sensor Details</h1>
+    
+    <div class="sensor-detail">
+        <h2>{{ sensor.sensor_id }}</h2>
+        <p><strong>Temperatur:</strong> {{ sensor.temperature }}°C</p>
+        <p><strong>Fugtighed:</strong> {{ sensor.humidity }}%</p>
+        <p><strong>Strømforbrug:</strong> {{ sensor.power_consumption }}kW</p>
+        <p><strong>Lokation:</strong> {{ sensor.location }}</p>
+        <p><strong>Sidst opdateret:</strong> {{ sensor.timestamp }}</p>
+    </div>
+
+    <a href="/" class="back-link">Back</a>
+</body>
+</html>

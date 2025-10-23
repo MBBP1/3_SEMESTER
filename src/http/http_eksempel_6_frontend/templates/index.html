@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CoolNet IoT</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #ffffffff; 
+            color: white; 
+            padding: 20px; 
+            text-align: center; 
+        }
+        .header img {
+            height: 150px;  /* Juster højden efter behov */
+            width: auto;
+            margin-bottom: 10px;
+        }
+        .nav { margin: 20px 0; }
+        .nav a { margin-right: 15px; text-decoration: none; color: #15283dff; }
+        .sensor { border: 1px solid #ddd; padding: 15px; margin: 10px 0; }
+        .critical { border-left: 5px solid red; }
+        .warning { border-left: 5px solid orange; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <!-- Logo -->
+        <img src="/static/images/coolnetiotlogo3.png" alt="CoolNet IoT Logo">
+        <!-- <h1>CoolNet IoT Dashboard</h1> -->
+        <!-- <p>Server Room Monitoring</p> -->
+    </div>
+
+    <div class="nav">
+        <a href="/">Home page</a>
+        <a href="/add">Add data</a>
+    </div>
+
+    <h2>Sensor Overview</h2>
+    
+    {% if sensors %}
+        {% for sensor_id, sensor in sensors.items() %}
+        <div class="sensor {% if sensor.temperature > 35 %}critical{% elif sensor.temperature > 30 %}warning{% endif %}">
+            <h3>{{ sensor.sensor_id }}</h3>
+            <p><strong>Temperatur:</strong> {{ sensor.temperature }}°C</p>
+            <p><strong>Fugtighed:</strong> {{ sensor.humidity }}%</p>
+            <p><strong>Strøm:</strong> {{ sensor.power_consumption }}kW</p>
+            <p><strong>Lokation:</strong> {{ sensor.location }}</p>
+            <a href="/view?sensor_id={{ sensor.sensor_id }}">See details</a>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>No sensor data available. <a href="/add">Add first sensor</a></p>
+    {% endif %}
+</body>
+</html>

@@ -234,3 +234,124 @@ I CoolNet IoT systemet bruger vi en kombination af fysiske forbindelser afhængi
 *Unit-test*
 ![alt text](images/persistence_test01.png)
 
+
+
+# Frontend Implementering
+
+## Problemstilling
+Brugere havde kun adgang til systemet via API-kald og terminal, hvilket gjorde det svært for ikke-tekniske medarbejdere at overvåge data og udføre daglige opgaver. Manglen på visuel grænseflade førte til fejl og ineffektivitet.
+
+## Løsning
+Vi har udviklet en webbaseret HTML-frontend der giver et intuitivt og grafisk interface til CoolNet IoT systemet med real-time visning af sensordata.
+
+## Screenshots
+
+### Forside - Dashboard
+![Forside](images\1frontend_homepage.png)
+
+
+### Sensor Detaljer - Visning
+![Visning](images\2frontend_sensordetails.png)
+
+
+### Tilføj Data - Formular
+![Formular](images\4frontend_addsensor.png)
+
+
+### Fejl Visning
+![Fejl](images\3frontend_errormessage.png)
+
+
+## HTML & CSS Templates
+
+### Template Struktur
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CoolNet IoT</title>
+    <style>
+        body { font-family: Arial; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .header { 
+            background: #15283dff; 
+            color: white; 
+            padding: 20px; 
+            text-align: center; 
+        }
+        .header img {
+            height: 50px;
+            width: auto;
+            margin-bottom: 10px;
+        }
+        .sensor { border: 1px solid #ddd; padding: 15px; margin: 10px 0; }
+        .critical { border-left: 5px solid red; }
+        .warning { border-left: 5px solid orange; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="/static/images/coolnetiotlogo3.png" alt="CoolNet IoT Logo">
+        <h1>CoolNet IoT Dashboard</h1>
+        <p>Server Room Monitoring</p>
+    </div>
+    <!-- Indhold -->
+</body>
+</html>
+```
+- Fil struktur
+```bash 
+  src/
+  ├── http_eksempel_6_frontend/        # Frontend
+  │   ├── frontend_api.py              # FastAPI frontend app
+  │   ├── main.py                      # Frontend entry point
+  │   ├── templates/                   # HTML templates
+  │   │   ├── index.html               # Forside/dashboard
+  │   │   ├── view.html                # Sensor detaljer
+  │   │   ├── add.html                 # Tilføj formular
+  │   │   └── error.html               # Fejl visning
+  │   └── static/                      # Static files
+  │       └── images/
+  │           └── coolnetiotlogo3.png  # Company logo
+  ├── http_eksempel_4/                 # Backend
+  │   ├── coolnet_rest_api.py          # REST API business logic
+  │   ├── flat_file_loader.py          # Data persistence
+  │   └── main.py                      # Backend entry point
+  └── coolnet_sensors.json             # Database (JSON file)
+```
+- Backend, frontend, database diagram
+```bash 
+┌─────────────────┐    HTTP/JSON     ┌─────────────────┐    File I/O     ┌─────────────────┐
+│    Frontend     │ ←──────────────→ │    Backend      │ ←─────────────→ │   Database      │
+│  (FastAPI App)  │                  │  (FastAPI App)  │                 │  (JSON File)    │
+│  Port: 8500     │   AJAX Calls     │  Port: 8000     │   Read/Write    │ coolnet_sensors.│
+│ HTML/CSS/JS     │                  │ Business Logic  │                 │      json       │
+└─────────────────┘                  └─────────────────┘                 └─────────────────┘
+      ↑                                     ↑                                     ↓
+   Browser                              Data Validation                      Persistent
+   Interface                                                                   Storage
+```
+
+Fordele ved Opdeling
+Frontend 
+
+    Brugergrænseflade - Visuel representation af data
+
+    Interaktivitet - Formularer, navigation, real-time updates
+
+    Tilgængelighed - Tilgængeligt for ikke-tekniske brugere
+
+Backend (Forretningslogik)
+
+    API Management - Håndterer HTTP requests/responses
+
+    Data Validering - Sikrer korrekt dataformat
+
+    Business Rules - Implementerer systemlogik og regler
+
+Database (Datalag)
+
+    Data Persistence - Langtidsobevaring af information
+
+    Data Integrity - Konsistent datastruktur
+
+    Backup - Mulighed for datasikkerhedskopier

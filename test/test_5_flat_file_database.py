@@ -24,7 +24,7 @@ def cleanup_files(scope="function", autouse=True):
     delete_json_files()
 
 # Tests
-@pytest.mark.focus
+#@pytest.mark.focus
 def test_start_api_with_empty_file_CRUD_Read(cleanup_files):
     """Test starting API with empty database file"""
     # Given
@@ -39,7 +39,7 @@ def test_start_api_with_empty_file_CRUD_Read(cleanup_files):
     response = client.get("/sensors/data/non_existent_sensor")
     assert response.status_code == 404
 
-@pytest.mark.focus
+#@pytest.mark.focus
 def test_start_api_with_existing_data_CRUD_Read(cleanup_files):
     """Test starting API with existing sensor data"""
     # Given
@@ -82,7 +82,7 @@ def test_start_api_with_existing_data_CRUD_Read(cleanup_files):
     assert data["body"]["temperature"] == 28.5
     assert data["body"]["location"] == "Server Rack A"
 
-@pytest.mark.focus
+#@pytest.mark.focus
 def test_create_sensor_persists_to_file_CRUD_Create(cleanup_files):
     """Test that creating sensor data persists to file"""
     # Given
@@ -111,7 +111,7 @@ def test_create_sensor_persists_to_file_CRUD_Create(cleanup_files):
     assert "new_sensor_01" in file_data["current"]
     assert len(file_data["history"]) == 1
 
-@pytest.mark.focus
+#@pytest.mark.focus
 def test_persistence_between_sessions_CRUD_Create_restart_Read(cleanup_files):
     """Test data persistence between API restarts"""
     # Given - First session
@@ -143,7 +143,7 @@ def test_persistence_between_sessions_CRUD_Create_restart_Read(cleanup_files):
     assert response.json()["body"]["sensor_id"] == "persistent_sensor"
     assert response.json()["body"]["temperature"] == 30.0
 
-@pytest.mark.focus
+#@pytest.mark.focus
 def test_sensor_config_operations(cleanup_files):
     """Test sensor configuration CRUD operations"""
     # Given

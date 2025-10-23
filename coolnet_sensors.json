@@ -1,0 +1,96 @@
+{
+  "current": {
+    "sensor_287": {
+      "sensor_id": "sensor_287",
+      "temperature": 25.4,
+      "humidity": 45.0,
+      "power_consumption": 15.0,
+      "location": "Server Rack A",
+      "timestamp": "2025-10-23T12:12:29.973096",
+      "company": "CoolNet IoT"
+    },
+    "sensor_416": {
+      "sensor_id": "sensor_416",
+      "temperature": 26.7,
+      "humidity": 42.8,
+      "power_consumption": 16.9,
+      "location": "Server Rack A",
+      "timestamp": "2025-10-23T11:57:06.670153",
+      "company": "CoolNet IoT"
+    },
+    "sensor_002": {
+      "sensor_id": "sensor_002",
+      "temperature": 26.1,
+      "humidity": 45.0,
+      "power_consumption": 15.0,
+      "location": "Server Rack A",
+      "timestamp": "2025-10-23T12:03:28.452120",
+      "company": "CoolNet IoT"
+    },
+    "sensor_001": {
+      "sensor_id": "sensor_001",
+      "temperature": 25.0,
+      "humidity": 1000.0,
+      "power_consumption": 15.0,
+      "location": "Server Rack A",
+      "timestamp": "2025-10-23T12:06:11.744155",
+      "company": "CoolNet IoT"
+    }
+  },
+  "history": [
+    {
+      "sensor_id": "sensor_287",
+      "temperature": 25.0,
+      "humidity": 45.0,
+      "power_consumption": 15.0,
+      "location": "Server Rack A",
+      "timestamp": "2025-10-23T11:54:50.160808",
+      "company": "CoolNet IoT"
+    },
+    {
+      "sensor_id": "sensor_416",
+      "temperature": 26.7,
+      "humidity": 42.8,
+      "power_consumption": 16.9,
+      "location": "Server Rack A",
+      "timestamp": "2025-10-23T11:57:06.670153",
+      "company": "CoolNet IoT"
+    },
+    {
+      "sensor_id": "sensor_002",
+      "temperature": 26.1,
+      "humidity": 45.0,
+      "power_consumption": 15.0,
+      "location": "Server Rack A",
+      "timestamp": "2025-10-23T12:03:28.452120",
+      "company": "CoolNet IoT"
+    },
+    {
+      "sensor_id": "sensor_001",
+      "temperature": 25.0,
+      "humidity": 1000.0,
+      "power_consumption": 15.0,
+      "location": "Server Rack A",
+      "timestamp": "2025-10-23T12:06:11.744155",
+      "company": "CoolNet IoT"
+    },
+    {
+      "sensor_id": "sensor_287",
+      "temperature": 25.0,
+      "humidity": 45.0,
+      "power_consumption": 15.0,
+      "location": "Server Rack A",
+      "timestamp": "2025-10-23T12:12:16.082707",
+      "company": "CoolNet IoT"
+    },
+    {
+      "sensor_id": "sensor_287",
+      "temperature": 25.4,
+      "humidity": 45.0,
+      "power_consumption": 15.0,
+      "location": "Server Rack A",
+      "timestamp": "2025-10-23T12:12:29.973096",
+      "company": "CoolNet IoT"
+    }
+  ]
+}

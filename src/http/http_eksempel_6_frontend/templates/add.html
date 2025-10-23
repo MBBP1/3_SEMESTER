@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Sensor - CoolNet IoT</title>
+    <style>
+        body { font-family: Arial; max-width: 500px; margin: 0 auto; padding: 20px; }
+        .form-group { margin: 15px 0; }
+        label { display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 8px; }
+        button { background: #0066cc; color: white; padding: 10px 20px; border: none; }
+    </style>
+</head>
+<body>
+    <h1>Add Sensor Data</h1>
+    
+    <form method="post">
+        <div class="form-group">
+            <label>Sensor ID:</label>
+            <input type="text" name="sensor_id" value="sensor_001" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Temperatur (°C):</label>
+            <input type="number" name="temperature" step="0.1" value="25.0" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Fugtighed (%):</label>
+            <input type="number" name="humidity" step="0.1" value="45.0" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Strømforbrug (kW):</label>
+            <input type="number" name="power_consumption" step="0.1" value="15.0" required>
+        </div>
+        
+        <div class="form-group">
+            <label>Lokation:</label>
+            <input type="text" name="location" value="Server Rack A" required>
+        </div>
+        
+        <button type="submit">Save Data</button>
+    </form>
+    
+    <a href="/" style="display: block; margin-top: 20px;">Cancel</a>
+</body>
+</html>

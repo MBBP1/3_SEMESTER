@@ -1,7 +1,7 @@
 Detailed documentation
 - pip install pytest amqtt asyncio paho-mqtt pytest-timeout fastapi uvicorn python-multipart httpx
 
-
+pytest*pip install amqtt asyncio paho-mqtt pytest-timeout fastapi uvicorn python-multipart httpx jinja2 AsyncClient pytest-asyncio`
 
 
 

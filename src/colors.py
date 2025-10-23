@@ -10,3 +10,4 @@ class Colors:
     magenta = "\033[45m"
     cyan = "\033[46m"
     white = "\033[107m"
+    
