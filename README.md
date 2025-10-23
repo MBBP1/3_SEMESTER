@@ -300,23 +300,23 @@ Vi har udviklet en webbaseret HTML-frontend der giver et intuitivt og grafisk in
 ```
 - Fil struktur
 ```bash 
-  src/
-  ├── http_eksempel_6_frontend/        # Frontend
-  │   ├── frontend_api.py              # FastAPI frontend app
-  │   ├── main.py                      # Frontend entry point
-  │   ├── templates/                   # HTML templates
-  │   │   ├── index.html               # Forside/dashboard
-  │   │   ├── view.html                # Sensor detaljer
-  │   │   ├── add.html                 # Tilføj formular
-  │   │   └── error.html               # Fejl visning
-  │   └── static/                      # Static files
-  │       └── images/
-  │           └── coolnetiotlogo3.png  # Company logo
-  ├── http_eksempel_4/                 # Backend
-  │   ├── coolnet_rest_api.py          # REST API business logic
-  │   ├── flat_file_loader.py          # Data persistence
-  │   └── main.py                      # Backend entry point
-  └── coolnet_sensors.json             # Database (JSON file)
+  src/http
+        ├── http_eksempel_6_frontend/        # Frontend
+        │   ├── frontend_api.py              # FastAPI frontend app
+        │   ├── main.py                      # Frontend entry point
+        │   ├── templates/                   # HTML templates
+        │   │   ├── index.html               # Forside/dashboard
+        │   │   ├── view.html                # Sensor detaljer
+        │   │   ├── add.html                 # Tilføj formular
+        │   │   └── error.html               # Fejl visning
+        │   └── static/                      # Static files
+        │       └── images/
+        │           └── coolnetiotlogo3.png  # Company logo
+        ├── http_eksempel_4/                 # Backend
+        │   ├── coolnet_rest_api.py          # REST API business logic
+        │   ├── flat_file_loader.py          # Data persistence
+        │   └── main.py                      # Backend entry point
+        └── coolnet_sensors.json             # Database (JSON file)
 ```
 - Backend, frontend, database diagram
 ```bash 
