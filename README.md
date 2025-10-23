@@ -126,7 +126,7 @@ MQTT er et godt valg til vores IoT-system af følgende årsager:
 ### Test med Clumsy
 Vores MQTT-system med QoS niveau 1 leverer **100% af beskederne** selv når Clumsy er sat til 10% pakketab, hvilket demonstrerer systemets robusthed.
 
-![alt text](images\mqtt_test01.png)
+![alt text](images/mqtt_test01.png)
 
 
 ### Systemarkitektur
