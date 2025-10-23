@@ -247,19 +247,19 @@ Vi har udviklet en webbaseret HTML-frontend der giver et intuitivt og grafisk in
 ## Screenshots
 
 ### Forside - Dashboard
-![Forside](images\1frontend_homepage.png)
+![Forside](images/1frontend_homepage.png)
 
 
 ### Sensor Detaljer - Visning
-![Visning](images\2frontend_sensordetails.png)
+![Visning](images/2frontend_sensordetails.png)
 
 
 ### Tilføj Data - Formular
-![Formular](images\4frontend_addsensor.png)
+![Formular](images/4frontend_addsensor.png)
 
 
 ### Fejl Visning
-![Fejl](images\3frontend_errormessage.png)
+![Fejl](images/3frontend_errormessage.png)
 
 
 ## HTML & CSS Templates
