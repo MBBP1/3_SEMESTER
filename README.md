@@ -77,7 +77,6 @@ Vi bruger TCP til kontrol af aktuatorer fordi:
 - `SET_PERFORMANCE` - Begrænser server performance ved overophedning
 - `ALERT_TECH` - Alarmerer tekniker ved kritiske situationer
 
-Testen beviser at TCP leverer **100% af beskederne** selv med Clumsy sat til 10% pakketab.
 
 ![alt text](images/tcp_test01.png)
 ```json
