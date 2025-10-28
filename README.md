@@ -7,15 +7,15 @@
 ## ToC
 
 - [Virksomhedsformål](#virksomhedsformål)
-- [Protokol Implementeringer](#-protokol-implementeringer)
-  - [UDP - Sensor Data Transmission](#udp---sensor-data-transmission)
-  - [TCP - Aktuator Control](#tcp---aktuator-control)
-  - [MQTT - IoT Device Kommunikation](#mqtt---iot-device-kommunikation)
-- [REST API](#-rest-api)
-- [Fysiske Forbindelser](#-fysiske-forbindelser)
-- [Data Persistence & OOP](#-data-persistence--oop)
+- [UDP - Sensor Data Transmission](#UDP---SENSOR-DATA-TRANSMISSION)
+- [TCP - Aktuator Control](#TCP-til-Aktuatorstyring)
+- [MQTT - IoT Device Kommunikation](#MQTT)
+- [REST API](#REST-API)
+- [Fysiske Forbindelser](#Fysiske-forbindelser)
+- [Data Persistence & OOP](#Data-Persistence-og-OOP-Arkitektur)
 - [System Arkitektur](#-system-arkitektur)
-- [Test Strategier](#-test-strategier)
+- [Frontend](#Frontend-Implementering)
+- [Encryption](#Encryption)
 
 
 #
@@ -30,7 +30,7 @@ Zealand Business Academy (zealand.dk)
     Vores virksomhed hedder CoolNet IoT og opererer inden for grøn IT og datacenter-teknologi. Logoet viser en serverrack med et blå-grønt signalikon, som symboliserer kombinationen af køling, energioptimering og netværksforbindelse.
 #
 
-### UDP
+### UDP - SENSOR DATA TRANSMISSION
 ![alt text](images/udp_test01.png)
 ```json
 {
@@ -360,25 +360,28 @@ Database (Datalag)
 
 ## Encryption
 
-Symmetrisk (AES)
+**Symmetrisk (AES)**
 
-    Bruges til at kryptere sensor- og aktuator-data i flat_file (fx temperatur og strømforbrug).
+    Bruges til at kryptere sensor- og aktuator-data i flat_file (Location & company name (Se længere nede)).
 
     Fordel: Hurtigt og effektivt, da både IoT-enhed og server deler samme nøgle.
 
     Bruges fx når data lagres midlertidigt i filsystemet.
 
-Asymmetrisk (RSA)
+    Giver både fortrolighed (confidentiality) og integritet (autentitet)
 
-    Bruges ved kommunikation mellem IoT-enheder og central controller, hvor nøgler skal udveksles sikkert.
+    Info: 
+      - Algoritme: AES
+      - Mode: EAX (AES.MODE_EAX)
+      - Base64 (Krypteret output er binær data. Base64 konverterer det til tekst, så det kan gemmes i JSON)
+      - Nøglelængde: 16 bytes (AES-128)
 
-    Fx: Controlleren sender sin offentlige nøgle til sensoren → sensoren bruger den til at kryptere AES-nøglen.
 
-Hashing (SHA-256)
 
-    Bruges til lagring af brugernavne, adgangskoder og API-nøgler i databasen/flat_file.
 
-    Fordel: Man kan validere login uden at gemme klartekst.
+
+
+
 
 
 ```json
@@ -397,3 +400,14 @@ Hashing (SHA-256)
 ![altd](images\encrypt-decrypt_test01.png)
 
 
+Asymmetrisk (RSA) - Ikke brugt
+
+    Bruges ved kommunikation mellem IoT-enheder og central controller, hvor nøgler skal udveksles sikkert.
+
+    Fx: Controlleren sender sin offentlige nøgle til sensoren → sensoren bruger den til at kryptere AES-nøglen.
+
+Hashing (SHA-256) - Ikke brugt
+
+    Bruges til lagring af brugernavne, adgangskoder og API-nøgler i databasen/flat_file.
+
+    Fordel: Man kan validere login uden at gemme klartekst.
