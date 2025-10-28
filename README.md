@@ -397,7 +397,7 @@ Database (Datalag)
 ```
 
 
-![altd](images\encrypt-decrypt_test01.png)
+![altd](images/encrypt-decrypt_test01.png)
 
 
 Asymmetrisk (RSA) - Ikke brugt
