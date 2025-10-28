@@ -2,9 +2,10 @@ from fastapi import FastAPI, Form, HTTPException
 from datetime import datetime
 from src.http.http_eksempel_4.flat_file_loader import FlatFileLoader
 from src.http.http_eksempel_4.sensor_models import SensorData, SensorConfig
+from src.http.http_eksempel_4.encryption_utils import encrypt_value, decrypt_value
 
 class CoolNetRestAPI:
-    def __init__(self, database_file_name: str = "coolnet_sensors.json"):
+    def __init__(self, database_file_name: str = "db_flat_file.json"):
         self.flat_file_loader = FlatFileLoader(database_file_name)
         self.sensor_data = {"current": {}, "history": []}
         self.sensor_configs = {}
@@ -44,9 +45,9 @@ class CoolNetRestAPI:
             "temperature": temperature,
             "humidity": humidity,
             "power_consumption": power_consumption,
-            "location": location,
+            "location": encrypt_value(location),  #krypteret
             "timestamp": timestamp,
-            "company": "CoolNet IoT"
+            "company": encrypt_value("CoolNet IoT")  #krypteret
         }
 
         # Update in-memory database
@@ -119,3 +120,19 @@ class CoolNetRestAPI:
     def invalid_sensors_endpoint(self):
         """Handle invalid sensors endpoint"""
         raise HTTPException(status_code=400, detail="Path must be /sensors/data or /sensors/data/<sensor_id>")
+    
+    def get_decrypted_sensors(self):
+        """Returnér alle sensorer med dekrypteret company/location"""
+        decrypted_data = {}
+        for sid, sdata in self.sensor_data["current"].items():
+            try:
+                sdata_copy = sdata.copy()
+                sdata_copy["location"] = decrypt_value(sdata["location"])
+                sdata_copy["company"] = decrypt_value(sdata["company"])
+                decrypted_data[sid] = sdata_copy
+            except Exception as e:
+                decrypted_data[sid] = {"error": str(e)}
+        return {
+            "header": {"status": "ok", "code": 200},
+            "body": decrypted_data
+        }

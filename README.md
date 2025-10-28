@@ -355,3 +355,45 @@ Database (Datalag)
     Data Integrity - Konsistent datastruktur
 
     Backup - Mulighed for datasikkerhedskopier
+
+
+
+## Encryption
+
+Symmetrisk (AES)
+
+    Bruges til at kryptere sensor- og aktuator-data i flat_file (fx temperatur og strømforbrug).
+
+    Fordel: Hurtigt og effektivt, da både IoT-enhed og server deler samme nøgle.
+
+    Bruges fx når data lagres midlertidigt i filsystemet.
+
+Asymmetrisk (RSA)
+
+    Bruges ved kommunikation mellem IoT-enheder og central controller, hvor nøgler skal udveksles sikkert.
+
+    Fx: Controlleren sender sin offentlige nøgle til sensoren → sensoren bruger den til at kryptere AES-nøglen.
+
+Hashing (SHA-256)
+
+    Bruges til lagring af brugernavne, adgangskoder og API-nøgler i databasen/flat_file.
+
+    Fordel: Man kan validere login uden at gemme klartekst.
+
+
+```json
+    "sensor_100": {
+      "sensor_id": "sensor_100",
+      "temperature": 25.0,
+      "humidity": 45.0,
+      "power_consumption": 17.2,
+      "location": "GCtegwUb3FjW51fHsLxyzAZnPHIf/PY59LnnwTQ=",
+      "timestamp": "2025-10-28T10:04:02.202421",
+      "company": "ut0S4Rz+YHETW+sZBupFm7F61lAckx1Bz5K8"
+    }
+```
+
+
+![altd](images\encrypt-decrypt_test01.png)
+
+

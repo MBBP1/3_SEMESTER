@@ -3,7 +3,7 @@ import httpx
 import json
 from src.http.http_eksempel_6_frontend.frontend_api import CoolNetFrontend
 
-@pytest.mark.focus
+#@pytest.mark.focus
 @pytest.mark.asyncio
 async def test_index_page():
     # given
@@ -24,7 +24,7 @@ async def test_index_page():
     assert 'Home page' in response.text  # to verify navigation exists
     assert 'Add data' in response.text  # to verify navigation exists
 
-@pytest.mark.focus
+#@pytest.mark.focus
 @pytest.mark.asyncio
 async def test_add_form_page():
     # given
@@ -49,7 +49,7 @@ async def test_add_form_page():
     assert 'name="location"' in response.text  # to verify location field exists
     assert 'Save Data' in response.text  # to verify submit button exists
 
-@pytest.mark.focus
+#@pytest.mark.focus
 @pytest.mark.asyncio
 async def test_view_page_no_sensor_id():
     # given
@@ -66,7 +66,7 @@ async def test_view_page_no_sensor_id():
     assert "text/html" in response.headers["content-type"]
     assert 'Angiv sensor ID' in response.text  # to verify error message
 
-@pytest.mark.focus
+#@pytest.mark.focus
 @pytest.mark.asyncio
 async def test_view_sensor_found(monkeypatch):
     # given mock
@@ -110,7 +110,7 @@ async def test_view_sensor_found(monkeypatch):
     assert "Server Rack A" in response.text  # to verify location is shown
     assert "Back" in response.text  # to verify back button exists
 
-@pytest.mark.focus
+#@pytest.mark.focus
 @pytest.mark.asyncio
 async def test_view_sensor_not_found(monkeypatch):
     # given mock
@@ -140,7 +140,7 @@ async def test_view_sensor_not_found(monkeypatch):
     assert "Sensor" in response.text and "nonexistent" in response.text and "ikke fundet" in response.text
     assert 'Back' in response.text  # to verify back button exists
 
-@pytest.mark.focus
+#@pytest.mark.focus
 @pytest.mark.asyncio
 async def test_add_sensor_success(monkeypatch):
     # given mock
@@ -184,7 +184,7 @@ async def test_add_sensor_success(monkeypatch):
     assert response.status_code == 303  # Redirect
     assert response.headers["location"] == "/"
 
-@pytest.mark.focus
+#@pytest.mark.focus
 @pytest.mark.asyncio
 async def test_backend_error_handling(monkeypatch):
     # given mock - simulate backend error

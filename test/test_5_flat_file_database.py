@@ -16,6 +16,7 @@ def delete_json_files():
     if os.path.exists(filename):
         os.remove(filename)
 
+
 @pytest.fixture
 def cleanup_files(scope="function", autouse=True):
     """Clean up before and after each test"""

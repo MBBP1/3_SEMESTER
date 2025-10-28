@@ -3,7 +3,7 @@ import json
 from typing import Dict, Any
 
 class FlatFileLoader:
-    def __init__(self, database_file_name: str = "coolnet_sensors.json"):
+    def __init__(self, database_file_name: str = "db_flat_file.json"):
         self.database_file_name = database_file_name
 
     def load_memory_database_from_file(self) -> Dict[str, Any]:

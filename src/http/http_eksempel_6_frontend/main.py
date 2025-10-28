@@ -7,7 +7,7 @@ app = frontend.app
 
 
 # Start backend server with:
-# uvicorn src.http_eksempel_4.main:app --reload
+# uvicorn src.http.http_eksempel_4.main:app --reload
 
 # Start frontend server with: 
 # uvicorn src.http_eksempel_6_frontend.main:app --port 8500 --reload
