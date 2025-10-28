@@ -2,6 +2,11 @@ import pytest
 import json
 from src.http.http_eksempel_4.encryption_utils import decrypt_value
 from src.colors import Colors
+from dotenv import load_dotenv
+import os
+
+load_dotenv()  # Læs .env i root
+SECRET_KEY = os.getenv("AES").encode()  # AES-key som bytes
 
 @pytest.mark.focus
 def test_decrypt_sensor_from_file():
@@ -11,11 +16,12 @@ def test_decrypt_sensor_from_file():
         data = json.load(f)
 
     # Vælg en specifik sensor
-    sensor_id = "sensor_100"
+    sensor_id = "sensor_101"
     sensor = data["current"].get(sensor_id)
     assert sensor is not None, f"Sensor {sensor_id} ikke fundet!"
 
-
+    # Print SECRET_KEY for debugging
+    print(f"\n{SECRET_KEY}")
 
     # Print krypterede værdier som de står i filen
     print(f"\n\nEncrypted values from flat file: {(sensor_id)}:")
