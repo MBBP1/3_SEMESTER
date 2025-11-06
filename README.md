@@ -411,3 +411,19 @@ Hashing (SHA-256) - Ikke brugt
     Bruges til lagring af brugernavne, adgangskoder og API-nøgler i databasen/flat_file.
 
     Fordel: Man kan validere login uden at gemme klartekst.
+
+
+
+    Vi brugre POST til at poste password og bruger navn fordi så har vi en header og en body og bodyen kan være kryptereter hvor imod hvis vi brugre en GET så ville man sende brugre navn og password ukrypteret.
+
+
+```
+auth_rest_api_models.py
+auth_rest_api.py
+auth_service.py
+environment_loader.py
+flat_file_loader.py
+main.py
+models.py
+user_service.py
+```

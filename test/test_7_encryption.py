@@ -8,7 +8,7 @@ import os
 load_dotenv()  # Læs .env i root
 SECRET_KEY = os.getenv("AES").encode()  # AES-key som bytes
 
-@pytest.mark.focus
+#@pytest.mark.focus
 def test_decrypt_sensor_from_file():
     # Load JSON-fil
     with open("db_flat_file.json", "r", encoding="utf-8") as f:
