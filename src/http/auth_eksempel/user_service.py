@@ -1,3 +1,4 @@
+#user_service.py
 import json, re
 from fastapi import HTTPException, status
 from typing import List
@@ -36,6 +37,11 @@ class User_service:
             password=Auth_service.hash_password("admin"),
             first_name=Auth_service.encrypt_data("admin_first_name"),
             last_name=Auth_service.encrypt_data("admin_last_name"),
+            country=Auth_service.encrypt_data("admin_country"),
+            city=Auth_service.encrypt_data("admin_city"),
+            zip_code=Auth_service.encrypt_data("admin_zip_code"),
+            street=Auth_service.encrypt_data("admin_street"),
+            house_number=Auth_service.encrypt_data("admin_house_number"),
             active=True,
             roles=[Role.admin],
         )
@@ -77,7 +83,7 @@ class User_service:
 
     # ----------- Public methods -----------
 
-    def register_user(self, username: str, password:str, first_name:str, last_name:str, roles: List[Role]):
+    def register_user(self, username: str, password:str, first_name:str, last_name:str, country:str, city:str, zip_code:str, street:str, house_number:str ,roles: List[Role]):
         self._check_if_email(username)
 
         if username in self._user_db:
@@ -87,6 +93,11 @@ class User_service:
             password = Auth_service.hash_password(password),
             first_name = Auth_service.encrypt_data(first_name),
             last_name = Auth_service.encrypt_data(last_name),
+            country = Auth_service.encrypt_data(country),
+            city = Auth_service.encrypt_data(city),
+            zip_code = Auth_service.encrypt_int_data(zip_code),
+            street = Auth_service.encrypt_data(street),
+            house_number = Auth_service.encrypt_int_data(house_number),
             active = True,
             roles = roles
         )
@@ -137,4 +148,45 @@ class User_service:
             self._save_database()
         else:
             raise HTTPException(status_code=403, detail="Admin privileges required")
+        
+    
 
+    # Tilføj disse metoder i User_service klassen
+    def get_user_status(self, token: str, username: str) -> bool:
+        """Check if a user is active (accessible for viewer, user and admin)"""
+        payload = Auth_service.verify_token(token)
+        requesting_user = payload["sub"]
+        requesting_roles = payload["roles"]
+        
+        # Check if requesting user has at least one of the required roles
+        if not self._user_has_at_least_one_role_for_access(requesting_user, [Role.viewer, Role.user, Role.admin]):
+            raise HTTPException(status_code=403, detail="Insufficient privileges")
+        
+        user = self._get_user(username)
+        return user.active
+
+    def get_user_address(self, token: str, username: str) -> dict:
+        """Get user name and address (accessible for user and admin)"""
+        payload = Auth_service.verify_token(token)
+        requesting_user = payload["sub"]
+        requesting_roles = payload["roles"]
+        
+        # Check if requesting user has at least one of the required roles
+        if not self._user_has_at_least_one_role_for_access(requesting_user, [Role.user, Role.admin]):
+            raise HTTPException(status_code=403, detail="Insufficient privileges")
+        
+        user = self._get_user(username)
+        
+        # Decrypt the address information
+        decrypted_address = {
+            "username": user.username,
+            "first_name": Auth_service.decrypt_data(user.first_name),
+            "last_name": Auth_service.decrypt_data(user.last_name),
+            "country": Auth_service.decrypt_data(user.country),
+            "city": Auth_service.decrypt_data(user.city),
+            "zip_code": Auth_service.decrypt_int_data(user.zip_code),
+            "street": Auth_service.decrypt_data(user.street),
+            "house_number": Auth_service.decrypt_int_data(user.house_number)
+        }
+        
+        return decrypted_address

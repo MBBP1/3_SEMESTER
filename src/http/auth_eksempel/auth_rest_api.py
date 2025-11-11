@@ -1,3 +1,4 @@
+#auth_rest_api.py
 import json
 from fastapi import FastAPI, Depends, HTTPException, Header, Body
 from typing import List
@@ -20,12 +21,20 @@ class Auth_rest_api:
         self.app.post("/deactivate_user")(self.deactivate_user)
         self.app.post("/activate_user")(self.activate_user)
 
+        self.app.get("/user/status/{username}")(self.get_user_status)
+        self.app.get("/user/address/{username}")(self.get_user_address)
+
     def register_user(self, post_variables: RegisterUserRequest):
         self.user_service.register_user(
             post_variables.username, 
             post_variables.password, 
             post_variables.first_name, 
-            post_variables.last_name, 
+            post_variables.last_name,
+            post_variables.country,
+            post_variables.city,
+            post_variables.zip_code,
+            post_variables.street,
+            post_variables.house_number, 
             post_variables.roles
         )
         return { "status": "user created"}
@@ -53,6 +62,29 @@ class Auth_rest_api:
         ):
         if not token.startswith("Bearer "):
             raise HTTPException(status_code=401, detail="Invalid or missing Authorization header")
-        
+
         self.user_service.activate_user(token, post_variables.username)
         return { "status": f"user '{post_variables.username}' has been reactivated"}
+
+    ## GET endpoints
+    def get_user_status(
+            self, 
+            username: str,
+            token: str = Header(...)
+    ):
+        if not token.startswith("Bearer "):
+            raise HTTPException(status_code=401, detail="Invalid or missing Authorization header")
+
+        is_active = self.user_service.get_user_status(token, username)
+        return {"username": username, "active": is_active}
+
+    def get_user_address(
+            self, 
+            username: str,
+            token: str = Header(...)
+    ):
+        if not token.startswith("Bearer "):
+            raise HTTPException(status_code=401, detail="Invalid or missing Authorization header")
+        
+        address_data = self.user_service.get_user_address(token, username)
+        return address_data

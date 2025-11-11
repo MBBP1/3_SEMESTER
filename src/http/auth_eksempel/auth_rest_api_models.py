@@ -1,3 +1,4 @@
+#auth_rest_api_models.py
 from pydantic import BaseModel
 from typing import List
 
@@ -8,6 +9,11 @@ class RegisterUserRequest(BaseModel):
     password: str
     first_name: str
     last_name: str
+    country: str
+    city: str
+    zip_code: str
+    street: str
+    house_number: str
     roles: List[Role]
 
 class GetBearerTokenRequest(BaseModel):
@@ -16,3 +22,4 @@ class GetBearerTokenRequest(BaseModel):
 
 class ActivateUserRequest(BaseModel):
     username: str
+

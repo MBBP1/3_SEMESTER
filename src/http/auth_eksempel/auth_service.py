@@ -1,17 +1,16 @@
+#auth_service.py
 import hashlib, hmac, os, base64, datetime, jwt
 from fastapi import HTTPException, status
+from typing import Union
 
 from src.http.auth_eksempel.environment_loader import Environment_loader
 from src.http.auth_eksempel.models import User, Role
-
-
-
-class Auth_service:
+ 
+class Auth_service: 
     _algorithm = "HS256"
 
     _secret, _fernet = Environment_loader.load_environment_data()
-
-
+ 
     @staticmethod
     def hash_password(password: str) -> str:
         salt = os.urandom(16)  # unique salt for each password
@@ -30,17 +29,34 @@ class Auth_service:
     def hmac_hash(password: str) -> str:
         return hmac.new(Auth_service._secret, password.encode(), hashlib.sha256).hexdigest()
 
-
-    # Symmetric enrcyption
+    # Symmetric encryption
     @staticmethod
-    def encrypt_data(plaintext: str) -> str:
+    def encrypt_data(plaintext) -> str:
+        # Convert to string if it's not already
+        if not isinstance(plaintext, str):
+            plaintext = str(plaintext)
         token = Auth_service._fernet.encrypt(plaintext.encode())
         return token.decode()
 
     @staticmethod
-    def decrypt_data(token: str) -> str:
-        plaintext = Auth_service._fernet.decrypt(token.encode())
-        return plaintext.decode()
+    def decrypt_data(token: str, return_type: type = str) -> Union[str, int, float]:
+        plaintext = Auth_service._fernet.decrypt(token.encode()).decode()
+        
+        if return_type == int:
+            return int(plaintext)
+        elif return_type == float:
+            return float(plaintext)
+        else:
+            return plaintext
+
+    # Specific methods for different data types
+    @staticmethod
+    def encrypt_int_data(value: int) -> str:
+        return Auth_service.encrypt_data(str(value))
+
+    @staticmethod
+    def decrypt_int_data(encrypted_value: str) -> int:
+        return int(Auth_service.decrypt_data(encrypted_value))
 
     @staticmethod
     def get_bearer_token(user:User):
@@ -64,6 +80,4 @@ class Auth_service:
         except jwt.ExpiredSignatureError:
             raise HTTPException(status_code=401, detail="Token expired")
         except jwt.InvalidTokenError:
-            raise HTTPException(status_code=401, detail="Invalid token")
-
-    
+            raise HTTPException(status_code=401, detail="Invalid token") 

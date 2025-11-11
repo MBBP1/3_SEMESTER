@@ -1,0 +1,62 @@
+{
+  "admin": {
+    "username": "admin",
+    "password": "maaBVfSV4KTs+wpGglbV2VvbnnDp+lKNcEwYQUaI7S6rEVxAQAJof0xnwy9zVgPg",
+    "first_name": "gAAAAABpE06MXO6WV98Jsf10uEa1EhZpW-l00Axire_cobY3nF05OieN3pt3kpfmeisFC2PvhH5jtZkcPoaAgBLVFb1rQksm67DZtoYkahWr5IfQhnW1Fxw=",
+    "last_name": "gAAAAABpE06Mu1J5oFvo2m6Aqqfi_QdW7pzq_H-G0ww-xnnMOs7RXiWX1F50PsIalBSbL_45ZIWLEDwPyLkvfihUtUOoWoV8sg==",
+    "country": "gAAAAABpE06M8vwNUMZAco7vXfDm7pPlmDX3QvBTt11mdjbe2aN1-DHeR9MRV5gVuUwB1ObtKmGYpgtX7KKJFVy_eYNuZcLilQ==",
+    "city": "gAAAAABpE06M-G5y5BpXKxEdQe8_5oMm_7LCWk0Rr5A91KBoDS0BfG_1iSAnATa-a4_D8DLePDItzmMJQj9chn-qOXvq8wKdHA==",
+    "zip_code": "gAAAAABpE06M_pgWm5vT4KvJ1lR_QhjewWCcwt3cSLQUW6pZUEsmRRHicGWqv769dms1fPELMqXrxMIXXUYZ8XQmUyqCvRrp_A==",
+    "street": "gAAAAABpE06M56L-lfI13w2J-h04mHoov1M2kMiabxC0t7sw8aCf9R2z2ReyLUtAfqHaUDiiNaDApWoRQ71pwnVNPRCyQoHXwg==",
+    "house_number": "gAAAAABpE06MV8LV4dUz7rlsc_2HZLoIAOEVZWoscjq3UKcMHE1H7sBpyER8HqQOEotB5Bg19nlTyq2iPUAb0WjtV4R6t1zFRgzGa6XOnl14zyrajIcqS44=",
+    "active": true,
+    "roles": [
+      "admin"
+    ]
+  },
+  "Hans@77": {
+    "username": "Hans@77",
+    "password": "o25mlsehlxy4KCC8nhuO9aTi2ik6Hb1UJujht50seWVLwKtxQRivHl5X+7pasg0x",
+    "first_name": "gAAAAABpE064NCEEaFSF_XWwFG0KY15yxUKsoMvPLEXgAQbphNJPQfbr5lRPNfPFzUMEvhq4YfecPteNgcGjIBvc8pGUIr63zw==",
+    "last_name": "gAAAAABpE064yiDCfXhjcOOifoh8pANi8InN1a7uX3A6uunLOEkTYL1w9WBC4FLEY7CBK-fme6IX5KRE-YKH-i3H1RiJrs5j7Q==",
+    "country": "gAAAAABpE0647Eo2p41Fl3vqSJeHg7OBerePUJnf8lf39mNQ_-2LunmHlVFhjtlK0oofMfQmAFY98HjZ4R034AqWeVS2y32zyQ==",
+    "city": "gAAAAABpE064VqhkTtibN5DAWaR0uBkoWpI7tvr53_AYGVlDLqHRVS7fuhCqwbyPJ5rfpfkUoHU2hrvG9-anPrlljvKge3FMog==",
+    "zip_code": "gAAAAABpE064Ek3N6ZGzRMKhm-dqQualchsoIz8EAZyusIm39d1-lIWxkS3tIHBijiT5X1WWFyeqLvoqgQm77P1RFO4Rwi_8kw==",
+    "street": "gAAAAABpE0640VGmMtBYoX5HnpB5j4vPvXUjoDClzARez6B3e8sudYG3MQzgGnjtvE9tRHGt7ixbTlQ7Eu_AFusJUaob1KPbRQ==",
+    "house_number": "gAAAAABpE064G-cjPRbutZHiw5lj5DCVgQYfqrc1cMU6NogyEs-itSjJn5l-jI-dZ0kUHtFhGXlKMakw9FI37b9sb5GAW7zC4w==",
+    "active": true,
+    "roles": [
+      "user"
+    ]
+  },
+  "Guest@01": {
+    "username": "Guest@01",
+    "password": "ihAlendZwnJCOkuvqTHNo6ykCimdNLFT7IBlbm2fGdmRzCObloPoa+Qp48Z1MwBB",
+    "first_name": "gAAAAABpE07Vm95KFycAzs6lhEmK03cJhcA6leXLyA1QqOY7LcoItwmG6-VbKU_tQHjN6QnYObpgTD1V5WkLJzhN5ca2yhY8GA==",
+    "last_name": "gAAAAABpE07V9FCi-5jIY6_CQYpEJyqYYxnQ_dFE0PYm8YzVf3njAbk9oWBe64V368TfO77168hmxMP1IS0hDVygMC2fG1gqQg==",
+    "country": "gAAAAABpE07Vw2L3P01aHkKt_agoAsQ43TqZ9fqbIOFdiZZFgLWBpshGJFD3npOQ1aiHxmM4iEcse0IA0uXrmauvm9p8yfdfSw==",
+    "city": "gAAAAABpE07VzLeUHhxhSMQm315bGPXLMjcvycbnxJmyVit731hFDDUhUYWwnZt5io80ghmyklqgR2ArqAXOi-J0EowNCfj-OA==",
+    "zip_code": "gAAAAABpE07Vcuk_8Yqdn50NtClrSLm6IiOvkKNFA0f92k4Gpk46By1ku0WCtbaMUyneWyEXnlhVRZj84mAG1cfnvxBReYyaBQ==",
+    "street": "gAAAAABpE07V1nkCrC__hutGTVlpZuiu0LN3N6w6aog8voZNPjMlhArRmB-h8illy4HRmZaknxXIWU0EhIWj3QcJk4VxnOECZg==",
+    "house_number": "gAAAAABpE07VtetMxXMl1TuFLpZxYjQWCOaFdrotB9SHdlOg6VYxWks5q245vbjEQlqUbmSkzbzZCj0AVQPNh50A9MxI19i0OA==",
+    "active": true,
+    "roles": [
+      "viewer"
+    ]
+  },
+  "test@example.com": {
+    "username": "test@example.com",
+    "password": "RpIqvu7KY7kQLrXmhBkGLILiy0g5Ta2IIu72fmTiOyPrYjUaJHJFRiS7R7r7bpLY",
+    "first_name": "gAAAAABpE1VR8m55L4hBl5pRupa4PrS7MGMA6zhGdDaAWib2T8YyVPgUuTBvlAWBW8M8BBgxFxCRfieXAuTz3epHjJ_yTLDD_w==",
+    "last_name": "gAAAAABpE1VRAygzHs_0YiZ-Z_EUnb9Tr8_k5kE3-p4TItBH6mA5I6cZ_ufw-nY-Nx4L7rAnmlmg9yMv7TNmT5-OuaTlkg6EzA==",
+    "country": "gAAAAABpE1VRN9AGyU_i5D7r2rmV_lKP9jzBEkmbplJr_eeIeEy7AFFgnBDVmzvbGJ5dUKFM2A955-S4gIJczwLAmKIZdsjmgA==",
+    "city": "gAAAAABpE1VRJuHDZnFE9gEW4pD15pGiN0XDCjJtX0irUwuCytxWqovnk5Ihuhk9g2olDwHP3Erlj2JCYnVPH2OIJ2qOPmhkuw==",
+    "zip_code": "gAAAAABpE1VRDreqO5H0hcVjNmDATR4yoT21yr-G_9hXzC-ZYGQle-41Cb1HdtiD_8H8WCqai6BvOGx-ThsH4qVtHDyKeT3uNg==",
+    "street": "gAAAAABpE1VRFNgs9j-uAs-xzO5O38Ah1tQYKM6L4bueUZ2cNEydo_Q4qNH1gYcmXehGDnna31D3baDFQTEphW2frXj_-CNyUw==",
+    "house_number": "gAAAAABpE1VRyDQnihaykeceUhBFvuFpNIVzEPYqKLleXYYNf7lv2GhOiyHU3kRKwjCopZu2g4A9T_82joA8SoSwmhD2-kLCSQ==",
+    "active": false,
+    "roles": [
+      "user"
+    ]
+  }
+}
