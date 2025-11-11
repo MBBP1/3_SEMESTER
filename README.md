@@ -427,3 +427,24 @@ main.py
 models.py
 user_service.py
 ```
+
+## Auth
+```json
+/Register User
+{ 
+  "username": "string",
+  "password": "string",
+  "first_name": "string",
+  "last_name": "string",
+  "country": "string",
+  "city": "string",
+  "zip_code": "string",
+  "street": "string",
+  "house_number": "string",
+  "roles": ["user"]
+}
+```
+![rr](images/6getUserDataa.png)
+
+
+![rr](images/7getUserStatus.png)

@@ -6,11 +6,10 @@
 # Node artifact files
 node_modules/
 dist/
-db_flat_file.json
 coolnet_sensors.json
 
 # environment files
-.env
+
 venv/
 
 # Compiled Java class files
