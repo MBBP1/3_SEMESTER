@@ -9,7 +9,7 @@ dist/
 coolnet_sensors.json
 
 # environment files
-
+#.env
 venv/
 
 # Compiled Java class files

@@ -1,3 +1,4 @@
+#main.py
 from src.http.http_eksempel_4.coolnet_rest_api import CoolNetRestAPI
 
 # Create API instance with persistence

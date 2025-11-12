@@ -53,6 +53,24 @@
       "location": "dTyU/bN7MXLdgMHs836Jus4eDr0cUq56Mf9SrLs=",
       "timestamp": "2025-10-28T13:18:07.002982",
       "company": "eYlY6ZNgcaP/M4nbASnOVpEql5V3aVY08GmY"
+    },
+    "44": {
+      "sensor_id": "44",
+      "temperature": 34.0,
+      "humidity": 90.0,
+      "power_consumption": 939.0,
+      "location": "fgL2713hs/PliyvdO5aKEydrWU6f",
+      "timestamp": "2025-11-12T10:25:52.378351",
+      "company": "VNMDY9p+iLvwXPP0yjrF9O+gMrewnQw6X07q"
+    },
+    "043": {
+      "sensor_id": "043",
+      "temperature": 23.0,
+      "humidity": 78.0,
+      "power_consumption": 833.0,
+      "location": "miwdbZ2Lo5nWAxom19AvqA+GRZV/",
+      "timestamp": "2025-11-12T10:33:39.667135",
+      "company": "xNINe6qqweBLiHP5hOvPRn4DqnjojlWsco5E"
     }
   },
   "history": [
@@ -127,6 +145,24 @@
       "location": "dTyU/bN7MXLdgMHs836Jus4eDr0cUq56Mf9SrLs=",
       "timestamp": "2025-10-28T13:18:07.002982",
       "company": "eYlY6ZNgcaP/M4nbASnOVpEql5V3aVY08GmY"
+    },
+    {
+      "sensor_id": "44",
+      "temperature": 34.0,
+      "humidity": 90.0,
+      "power_consumption": 939.0,
+      "location": "fgL2713hs/PliyvdO5aKEydrWU6f",
+      "timestamp": "2025-11-12T10:25:52.378351",
+      "company": "VNMDY9p+iLvwXPP0yjrF9O+gMrewnQw6X07q"
+    },
+    {
+      "sensor_id": "043",
+      "temperature": 23.0,
+      "humidity": 78.0,
+      "power_consumption": 833.0,
+      "location": "miwdbZ2Lo5nWAxom19AvqA+GRZV/",
+      "timestamp": "2025-11-12T10:33:39.667135",
+      "company": "xNINe6qqweBLiHP5hOvPRn4DqnjojlWsco5E"
     }
   ]
 }

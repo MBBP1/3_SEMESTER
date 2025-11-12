@@ -448,3 +448,27 @@ user_service.py
 
 
 ![rr](images/7getUserStatus.png)
+
+
+
+## Logging
+
+INCIDENT
+Brugere af jeres applikation oplevede periodiske fejl. De oplever det på forskellige tider af døgnet, men mest mandag morgen/formiddag. Brugerne nævner noget om fejl 5xx.
+
+
+THEN
+Vi logger nu serverracks temperatur, luftfugtighed samt strømforbrug.
+
+```json
+{"asctime": "2025-11-12 10:33:39,686", 
+"levelname": "INFO", 
+"name": "src.logger.logger", 
+"message": "Sensor data created", 
+"sensor_id": "043", 
+"temperature": 23.0, 
+"humidity": 78.0, 
+"location": "RackA"}
+```
+
+![rr](images/8logFile.png)

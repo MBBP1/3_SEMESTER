@@ -1,0 +1,11 @@
+{"asctime": "2025-11-12 10:31:25,405", "levelname": "INFO", "name": "src.logger.logger", "message": "Applikationen starter"}
+{"asctime": "2025-11-12 10:31:25,405", "levelname": "WARNING", "name": "src.logger.logger", "message": "Advarsel", "http_error_code": 400}
+{"asctime": "2025-11-12 10:31:25,405", "levelname": "ERROR", "name": "src.logger.logger", "message": "Noget gik galt", "http_error_code": 500}
+{"asctime": "2025-11-12 10:31:40,979", "levelname": "INFO", "name": "src.logger.logger", "message": "CoolNet IoT API starting - loading data from file"}
+{"asctime": "2025-11-12 10:31:40,979", "levelname": "INFO", "name": "src.logger.logger", "message": "Data loaded successfully", "current_sensors": 7, "historical_records": 9}
+{"asctime": "2025-11-12 10:32:05,120", "levelname": "INFO", "name": "src.logger.logger", "message": "HTTP Request", "method": "GET", "url": "http://127.0.0.1:8000/", "status_code": 404, "client_ip": "127.0.0.1"}
+{"asctime": "2025-11-12 10:32:05,224", "levelname": "INFO", "name": "src.logger.logger", "message": "HTTP Request", "method": "GET", "url": "http://127.0.0.1:8000/favicon.ico", "status_code": 404, "client_ip": "127.0.0.1"}
+{"asctime": "2025-11-12 10:32:41,258", "levelname": "INFO", "name": "src.logger.logger", "message": "HTTP Request", "method": "GET", "url": "http://127.0.0.1:8000/docs", "status_code": 200, "client_ip": "127.0.0.1"}
+{"asctime": "2025-11-12 10:32:41,747", "levelname": "INFO", "name": "src.logger.logger", "message": "HTTP Request", "method": "GET", "url": "http://127.0.0.1:8000/openapi.json", "status_code": 200, "client_ip": "127.0.0.1"}
+{"asctime": "2025-11-12 10:33:39,686", "levelname": "INFO", "name": "src.logger.logger", "message": "Sensor data created", "sensor_id": "043", "temperature": 23.0, "humidity": 78.0, "location": "RackA"}
+{"asctime": "2025-11-12 10:33:39,687", "levelname": "INFO", "name": "src.logger.logger", "message": "HTTP Request", "method": "POST", "url": "http://127.0.0.1:8000/sensors/data", "status_code": 200, "client_ip": "127.0.0.1"}
