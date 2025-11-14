@@ -1,0 +1,77 @@
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: ../
+      dockerfile: ./docker/docker_file_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../:/app
+      #  - ../certs:/certs
+    command: uvicorn src.http.http_eksempel_4.main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ../
+      dockerfile: ./docker/docker_file_frontend
+    ports:
+      - "8500:8500"
+    volumes:
+      - ../src:/app/src
+      - ../certs:/certs
+    environment:
+      BACKEND_URL: "http://backend:8000"
+    command: >
+      uvicorn src.http.http_eksempel_6_frontend.main:app
+      --host 0.0.0.0
+      --port 8500
+      --ssl-keyfile /certs/server.key
+      --ssl-certfile /certs/server.crt
+
+
+# services:
+#   backend:
+#     build:
+#       context: ../
+#       dockerfile: ./docker/docker_file_backend
+#     ports:
+#       - "8001:8001"
+#     volumes:
+#       - ../:/app
+#     command: uvicorn src.http_eksempel_4.main:app --port 8001 --reload
+
+
+  # frontend:
+  #   container_name: frontend
+  #   build:
+  #     context: ../
+  #     dockerfile: ./docker/docker_file_frontend
+  #   ports:
+  #     - "8501:8501"
+  #   volumes:
+  #     - ../:/app
+  #      - ../certs:/certs
+  #   command: uvicorn src.http_eksempel_6_frontend.main:app --host 0.0.0.0 --port 8500 --reload
+
+  # nginx:
+  #   container_name: nginx
+  #   image: nginx:stable
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+  #     - ../certs:/etc/ssl/certs:ro
+  #   depends_on:
+  #     - backend
+
+  # frontend:
+  #   build:
+  #     context: ../
+  #     dockerfile: ./docker/docker_file_frontend
+  #   ports:
+  #     - "8501:8501"
+  #   command: uvicorn src.http_eksempel_6_frontend.main:app --port 8500 --reload

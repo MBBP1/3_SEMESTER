@@ -461,14 +461,16 @@ THEN
 Vi logger nu serverracks temperatur, luftfugtighed samt strømforbrug.
 
 ```json
-{"asctime": "2025-11-12 10:33:39,686", 
-"levelname": "INFO", 
-"name": "src.logger.logger", 
-"message": "Sensor data created", 
-"sensor_id": "043", 
-"temperature": 23.0, 
-"humidity": 78.0, 
-"location": "RackA"}
+{
+  "asctime": "2025-11-12 10:33:39,686", 
+  "levelname": "INFO", 
+  "name": "src.logger.logger", 
+  "message": "Sensor data created", 
+  "sensor_id": "043", 
+  "temperature": 23.0, 
+  "humidity": 78.0, 
+  "location": "RackA"
+}
 ```
 
 ![rr](images/8logFile.png)

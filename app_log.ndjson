@@ -9,3 +9,25 @@
 {"asctime": "2025-11-12 10:32:41,747", "levelname": "INFO", "name": "src.logger.logger", "message": "HTTP Request", "method": "GET", "url": "http://127.0.0.1:8000/openapi.json", "status_code": 200, "client_ip": "127.0.0.1"}
 {"asctime": "2025-11-12 10:33:39,686", "levelname": "INFO", "name": "src.logger.logger", "message": "Sensor data created", "sensor_id": "043", "temperature": 23.0, "humidity": 78.0, "location": "RackA"}
 {"asctime": "2025-11-12 10:33:39,687", "levelname": "INFO", "name": "src.logger.logger", "message": "HTTP Request", "method": "POST", "url": "http://127.0.0.1:8000/sensors/data", "status_code": 200, "client_ip": "127.0.0.1"}
+{"asctime": "2025-11-14 08:34:55,743", "levelname": "INFO", "name": "src.logger.logger", "message": "CoolNet IoT API starting - loading data from file"}
+{"asctime": "2025-11-14 08:34:55,802", "levelname": "INFO", "name": "src.logger.logger", "message": "Data loaded successfully", "current_sensors": 8, "historical_records": 10}
+{"asctime": "2025-11-14 08:42:35,632", "levelname": "INFO", "name": "src.logger.logger", "message": "CoolNet IoT API starting - loading data from file"}
+{"asctime": "2025-11-14 08:42:35,651", "levelname": "INFO", "name": "src.logger.logger", "message": "Data loaded successfully", "current_sensors": 8, "historical_records": 10}
+{"asctime": "2025-11-14 08:42:48,524", "levelname": "INFO", "name": "src.logger.logger", "message": "CoolNet IoT API starting - loading data from file"}
+{"asctime": "2025-11-14 08:42:48,771", "levelname": "INFO", "name": "src.logger.logger", "message": "Data loaded successfully", "current_sensors": 8, "historical_records": 10}
+{"asctime": "2025-11-14 08:43:07,935", "levelname": "INFO", "name": "src.logger.logger", "message": "CoolNet IoT API starting - loading data from file"}
+{"asctime": "2025-11-14 08:43:07,945", "levelname": "INFO", "name": "src.logger.logger", "message": "Data loaded successfully", "current_sensors": 8, "historical_records": 10}
+{"asctime": "2025-11-14 08:43:30,959", "levelname": "INFO", "name": "src.logger.logger", "message": "CoolNet IoT API starting - loading data from file"}
+{"asctime": "2025-11-14 08:43:30,970", "levelname": "INFO", "name": "src.logger.logger", "message": "Data loaded successfully", "current_sensors": 8, "historical_records": 10}
+{"asctime": "2025-11-14 08:43:44,333", "levelname": "INFO", "name": "src.logger.logger", "message": "Retrieved all sensor data", "sensor_count": 8}
+{"asctime": "2025-11-14 08:43:44,342", "levelname": "INFO", "name": "src.logger.logger", "message": "HTTP Request", "method": "GET", "url": "http://backend:8000/sensors/data", "status_code": 200, "client_ip": "172.18.0.3"}
+{"asctime": "2025-11-14 08:43:55,207", "levelname": "INFO", "name": "src.logger.logger", "message": "Retrieved sensor data", "sensor_id": "44"}
+{"asctime": "2025-11-14 08:43:55,209", "levelname": "INFO", "name": "src.logger.logger", "message": "HTTP Request", "method": "GET", "url": "http://backend:8000/sensors/data/44", "status_code": 200, "client_ip": "172.18.0.3"}
+{"asctime": "2025-11-14 08:43:55,368", "levelname": "INFO", "name": "src.logger.logger", "message": "Retrieved sensor data", "sensor_id": "44"}
+{"asctime": "2025-11-14 08:43:55,370", "levelname": "INFO", "name": "src.logger.logger", "message": "HTTP Request", "method": "GET", "url": "http://backend:8000/sensors/data/44", "status_code": 200, "client_ip": "172.18.0.3"}
+{"asctime": "2025-11-14 08:43:58,381", "levelname": "INFO", "name": "src.logger.logger", "message": "Retrieved all sensor data", "sensor_count": 8}
+{"asctime": "2025-11-14 08:43:58,385", "levelname": "INFO", "name": "src.logger.logger", "message": "HTTP Request", "method": "GET", "url": "http://backend:8000/sensors/data", "status_code": 200, "client_ip": "172.18.0.3"}
+{"asctime": "2025-11-14 08:44:04,653", "levelname": "INFO", "name": "src.logger.logger", "message": "Retrieved all sensor data", "sensor_count": 8}
+{"asctime": "2025-11-14 08:44:04,656", "levelname": "INFO", "name": "src.logger.logger", "message": "HTTP Request", "method": "GET", "url": "http://backend:8000/sensors/data", "status_code": 200, "client_ip": "172.18.0.3"}
+{"asctime": "2025-11-14 09:08:34,925", "levelname": "INFO", "name": "src.logger.logger", "message": "Retrieved all sensor data", "sensor_count": 8}
+{"asctime": "2025-11-14 09:08:34,933", "levelname": "INFO", "name": "src.logger.logger", "message": "HTTP Request", "method": "GET", "url": "http://backend:8000/sensors/data", "status_code": 200, "client_ip": "172.18.0.3"}

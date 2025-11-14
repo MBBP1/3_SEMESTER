@@ -1,0 +1,17 @@
+# Use a lightweight Python base image
+FROM python:3.12-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy backend source code into container
+COPY src/http/http_eksempel_6_frontend /app/src/http/http_eksempel_6_frontend
+
+# Install dependencies
+RUN pip install amqtt asyncio paho-mqtt pytest-timeout fastapi uvicorn python-multipart httpx jinja2 AsyncClient pytest-asyncio Crypto python-jose python-dotenv cryptography pyjwt python-json-logger
+
+# Expose HTTPS port
+EXPOSE 8000
+
+# Run FastAPI using Uvicorn with HTTPS
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
